@@ -1,5 +1,6 @@
 package com.gi.ikhwanmusicandroid
 
+import android.app.Fragment
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
@@ -12,6 +13,9 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import layout.HomeFragment
+import layout.PlayFragment
+import layout.RadioFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -68,15 +72,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         val id = item.itemId
 
+        var fragment : Fragment = HomeFragment();
+
         if (id == R.id.nav_home) {
-            // Handle the camera action
+            fragment = HomeFragment()
         } else if (id == R.id.nav_play) {
-
+            fragment = PlayFragment()
         } else if (id == R.id.nav_radio) {
-
+            fragment = RadioFragment()
         } else if (id == R.id.nav_settings) {
 
         }
+
+        fragmentManager.beginTransaction().replace(R.id.content_main, fragment).commit()
 
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
         drawer.closeDrawer(GravityCompat.START)

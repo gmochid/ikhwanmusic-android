@@ -1,2 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/Users/gmochid/Project/gi/ikhwanmusic-android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/libs/internal_impl-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="a4de9c81ae239414e1ed0f86441b02abaf29bca9">
+        <dex dex="/Users/gmochid/Project/gi/ikhwanmusic-android/app/build/intermediates/pre-dexed/debug/internal_impl-23.1.1_0631fe04196b50cec23b70cda185d83239285ef3.jar" />
+    </item>
+    <item
+        jar="/Users/gmochid/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.0.0-beta-4589/ce246fdbecf1a358d08522c971e5dc71b35cc0ea/kotlin-stdlib-1.0.0-beta-4589.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="ce246fdbecf1a358d08522c971e5dc71b35cc0ea">
+        <dex dex="/Users/gmochid/Project/gi/ikhwanmusic-android/app/build/intermediates/pre-dexed/debug/kotlin-stdlib-1.0.0-beta-4589_a0adc41adc636b370b5e359db9215fdb0ff5e073.jar" />
+    </item>
+    <item
+        jar="/Users/gmochid/Project/gi/ikhwanmusic-android/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="09c5e804bc67fc0580360043dff067df574a60d4">
+        <dex dex="/Users/gmochid/Project/gi/ikhwanmusic-android/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-23.1.1_e10674f44b38ccfe7c7af9fa8bc0490d3f618d15.jar" />
+    </item>
+    <item
+        jar="/Users/gmochid/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-runtime/1.0.0-beta-4589/7d0a683599f8fa2d5fea55ad8bc3ca3f51a8354a/kotlin-runtime-1.0.0-beta-4589.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="7d0a683599f8fa2d5fea55ad8bc3ca3f51a8354a">
+        <dex dex="/Users/gmochid/Project/gi/ikhwanmusic-android/app/build/intermediates/pre-dexed/debug/kotlin-runtime-1.0.0-beta-4589_1c1b316c591f835392e11170bc4cf77c682ec9fb.jar" />
+    </item>
+    <item
+        jar="/Users/gmochid/Project/gi/ikhwanmusic-android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="6cbc7773921fcfedbe55657578f0cbfe614778dc">
+        <dex dex="/Users/gmochid/Project/gi/ikhwanmusic-android/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.1.1_11ddc99e486835fb23f83d6b6138ebe9f93a4f20.jar" />
+    </item>
+    <item
+        jar="/Users/gmochid/Project/gi/ikhwanmusic-android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="5c5699834e9722f1c288fea2de82725d078ba127">
+        <dex dex="/Users/gmochid/Project/gi/ikhwanmusic-android/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.1.1_eedc08e40464ce4e31b03e5db8018d64d26ad2b9.jar" />
+    </item>
+    <item
+        jar="/Users/gmochid/Project/gi/ikhwanmusic-android/app/build/intermediates/exploded-aar/com.android.support/design/23.1.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="379471b2bd17d9737c050345c08e8c7d16589784">
+        <dex dex="/Users/gmochid/Project/gi/ikhwanmusic-android/app/build/intermediates/pre-dexed/debug/com.android.support-design-23.1.1_2c97bfd004c37e43233b5e31c0dd0bbdf7bb871f.jar" />
+    </item>
+    <item
+        jar="/Users/gmochid/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8d680ba5a623724d1fb0e81c36a790f023a6cede">
+        <dex dex="/Users/gmochid/Project/gi/ikhwanmusic-android/app/build/intermediates/pre-dexed/debug/support-annotations-23.1.1_4b16269ab691ba078602fc4e808aadee27695ed0.jar" />
+    </item>
+
+</items>
