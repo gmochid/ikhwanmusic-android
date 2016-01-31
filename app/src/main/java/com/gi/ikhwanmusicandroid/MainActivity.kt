@@ -16,6 +16,7 @@ import android.view.MenuItem
 import layout.HomeFragment
 import layout.PlayFragment
 import layout.RadioFragment
+import layout.SettingsFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -36,6 +37,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
+
+        fragmentManager.beginTransaction().replace(R.id.content_main, HomeFragment()).commit()
     }
 
     override fun onBackPressed() {
@@ -72,19 +75,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         val id = item.itemId
 
-        var fragment : Fragment = HomeFragment();
-
-        if (id == R.id.nav_home) {
-            fragment = HomeFragment()
-        } else if (id == R.id.nav_play) {
-            fragment = PlayFragment()
-        } else if (id == R.id.nav_radio) {
-            fragment = RadioFragment()
-        } else if (id == R.id.nav_settings) {
-
+        when (id) {
+            R.id.nav_home -> fragmentManager.beginTransaction().replace(R.id.content_main, HomeFragment()).commit()
+            R.id.nav_play -> fragmentManager.beginTransaction().replace(R.id.content_main, PlayFragment()).commit()
+            R.id.nav_radio -> fragmentManager.beginTransaction().replace(R.id.content_main, RadioFragment()).commit()
+            R.id.nav_settings -> fragmentManager.beginTransaction().replace(R.id.content_main, SettingsFragment()).commit()
         }
-
-        fragmentManager.beginTransaction().replace(R.id.content_main, fragment).commit()
 
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
         drawer.closeDrawer(GravityCompat.START)
