@@ -38,8 +38,6 @@ public class RadioFragment extends Fragment {
     // TODO: Rename and change types and number of parameters
     public static RadioFragment newInstance() {
         RadioFragment fragment = new RadioFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
         return fragment;
     }
 

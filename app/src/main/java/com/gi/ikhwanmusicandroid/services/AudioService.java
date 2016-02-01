@@ -34,6 +34,7 @@ public class AudioService {
         }
 
         this.url = url;
+        mediaPlayer.reset();
         mediaPlayer.setAudioStreamType(android.media.AudioManager.STREAM_MUSIC);
 
         try {

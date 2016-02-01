@@ -1,10 +1,6 @@
 package com.gi.ikhwanmusicandroid
 
-import android.app.Fragment
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.Snackbar
-import android.view.View
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
@@ -13,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import com.gi.ikhwanmusicandroid.models.Song
 import layout.HomeFragment
 import layout.PlayFragment
 import layout.RadioFragment
@@ -73,14 +70,47 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val id = item.itemId
 
         when (id) {
-            R.id.nav_home -> fragmentManager.beginTransaction().replace(R.id.content_main, HomeFragment()).commit()
-            R.id.nav_play -> fragmentManager.beginTransaction().replace(R.id.content_main, PlayFragment()).commit()
-            R.id.nav_radio -> fragmentManager.beginTransaction().replace(R.id.content_main, RadioFragment()).commit()
-            R.id.nav_settings -> fragmentManager.beginTransaction().replace(R.id.content_main, SettingsFragment()).commit()
+            R.id.nav_home -> {
+                var homeFragment = fragmentManager.findFragmentById(R.id.fragment_home)
+                homeFragment = if (homeFragment != null) homeFragment else HomeFragment()
+
+                fragmentManager.beginTransaction().replace(R.id.content_main, homeFragment).commit()
+            }
+            R.id.nav_play -> {
+                var playFragment = fragmentManager.findFragmentById(R.id.fragment_play)
+                playFragment = if (playFragment != null) playFragment else PlayFragment()
+
+                fragmentManager.beginTransaction().replace(R.id.content_main, playFragment).commit()
+            }
+            R.id.nav_radio -> {
+                var radioFragment = fragmentManager.findFragmentById(R.id.fragment_radio)
+                radioFragment = if (radioFragment != null) radioFragment else RadioFragment()
+
+                fragmentManager.beginTransaction().replace(R.id.content_main, radioFragment).commit()
+            }
+            R.id.nav_settings -> {
+                var settingsFragment = fragmentManager.findFragmentById(R.id.fragment_settings)
+                settingsFragment = if (settingsFragment != null) settingsFragment else SettingsFragment()
+
+                fragmentManager.beginTransaction().replace(R.id.content_main, settingsFragment).commit()
+            }
         }
 
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
         drawer.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    fun playSong(song: Song) {
+        var playFragment = fragmentManager.findFragmentById(R.id.fragment_play) as? PlayFragment
+        if (playFragment != null) {
+            playFragment.playSong()
+        } else {
+            playFragment = PlayFragment.newInstance(song, true)
+            fragmentManager.beginTransaction().replace(R.id.content_main, playFragment).commit()
+        }
+
+        val navigationView = findViewById(R.id.nav_view) as NavigationView
+        navigationView.menu.getItem(1).setChecked(true)
     }
 }

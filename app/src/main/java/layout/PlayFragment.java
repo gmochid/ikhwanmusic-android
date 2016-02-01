@@ -24,11 +24,16 @@ import com.gi.ikhwanmusicandroid.services.AudioService;
  */
 public class PlayFragment extends Fragment {
 
+    private static final String SONG_PARAM = "song";
+    private static final String PLAY_PARAM = "play";
+
     private OnFragmentInteractionListener mListener;
     private ImageView playButton;
     private ImageView pauseButton;
     private TextView titleText;
+
     private Song song = new Song("Mengenal Nabi", "https://s3-ap-southeast-1.amazonaws.com/ikhwan-music/Mengenal+Nabi.mp3", "Qatrunnada");
+    private Boolean play = false;
 
     public PlayFragment() {
         // Required empty public constructor
@@ -40,10 +45,11 @@ public class PlayFragment extends Fragment {
      *
      * @return A new instance of fragment PlayFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static PlayFragment newInstance() {
+    public static PlayFragment newInstance(Song song, Boolean play) {
         PlayFragment fragment = new PlayFragment();
         Bundle args = new Bundle();
+        args.putSerializable(SONG_PARAM, song);
+        args.putBoolean(PLAY_PARAM, play);
         fragment.setArguments(args);
         return fragment;
     }
@@ -51,6 +57,11 @@ public class PlayFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            song = (Song) getArguments().getSerializable(SONG_PARAM);
+            play = getArguments().getBoolean(PLAY_PARAM);
+        }
     }
 
     @Override
@@ -68,6 +79,7 @@ public class PlayFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AudioService.getInstance().play(song.getUrl());
+                play = true;
 
                 v.setVisibility(View.INVISIBLE);
                 pauseButton.setVisibility(View.VISIBLE);
@@ -77,6 +89,7 @@ public class PlayFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AudioService.getInstance().pause();
+                play = false;
 
                 v.setVisibility(View.INVISIBLE);
                 playButton.setVisibility(View.VISIBLE);
@@ -86,11 +99,17 @@ public class PlayFragment extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (play) {
+            playSong();
         }
+    }
+
+    public void playSong() {
+        playButton.callOnClick();
     }
 
     @Override

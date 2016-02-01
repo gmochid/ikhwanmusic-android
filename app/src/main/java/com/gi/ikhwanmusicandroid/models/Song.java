@@ -1,9 +1,11 @@
 package com.gi.ikhwanmusicandroid.models;
 
+import java.io.Serializable;
+
 /**
  * Created by gmochid on 1/31/16.
  */
-public class Song {
+public class Song implements Serializable {
     private String title;
     private String url;
     private String artist;
