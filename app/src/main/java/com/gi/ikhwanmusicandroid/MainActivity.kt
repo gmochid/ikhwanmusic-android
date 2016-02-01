@@ -9,7 +9,9 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import com.crashlytics.android.Crashlytics
 import com.gi.ikhwanmusicandroid.models.Song
+import io.fabric.sdk.android.Fabric
 import layout.HomeFragment
 import layout.PlayFragment
 import layout.RadioFragment
@@ -19,6 +21,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Fabric.with(this, Crashlytics())
+
         setContentView(R.layout.activity_main)
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
