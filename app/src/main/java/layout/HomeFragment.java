@@ -77,9 +77,9 @@ public class HomeFragment extends Fragment {
     public List<Song> sampleData() {
         List<Song> songs = new ArrayList<Song>();
 
-        songs.add(new Song("Mengenal Nabi", "https://s3-ap-southeast-1.amazonaws.com/ikhwan-music/Mengenal+Nabi.mp3"));
-        songs.add(new Song("Satu Peringatan", "https://s3-ap-southeast-1.amazonaws.com/ikhwan-music/Satu+Peringatan.mp3"));
-        songs.add(new Song("Sembahyang Hubungan dengan Khaliqnya", "https://s3-ap-southeast-1.amazonaws.com/ikhwan-music/Sembahyang+Hubungan+Hamba+dengan+Khaliqnya.mp3"));
+        songs.add(new Song("Mengenal Nabi", "https://s3-ap-southeast-1.amazonaws.com/ikhwan-music/Mengenal+Nabi.mp3", "Qatrunnada"));
+        songs.add(new Song("Satu Peringatan", "https://s3-ap-southeast-1.amazonaws.com/ikhwan-music/Satu+Peringatan.mp3", "Qatrunnada"));
+        songs.add(new Song("Sembahyang Hubungan dengan Khaliqnya", "https://s3-ap-southeast-1.amazonaws.com/ikhwan-music/Sembahyang+Hubungan+Hamba+dengan+Khaliqnya.mp3", "Mawaddah"));
 
         return songs;
     }

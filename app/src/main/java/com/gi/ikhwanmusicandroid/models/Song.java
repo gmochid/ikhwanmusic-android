@@ -6,10 +6,12 @@ package com.gi.ikhwanmusicandroid.models;
 public class Song {
     private String title;
     private String url;
+    private String artist;
 
-    public Song(String title, String url) {
+    public Song(String title, String url, String artist) {
         this.title = title;
         this.url = url;
+        this.artist = artist;
     }
 
     public String getUrl() {
@@ -28,4 +30,11 @@ public class Song {
         this.title = title;
     }
 
+    public String getArtist() {
+        return artist;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
 }

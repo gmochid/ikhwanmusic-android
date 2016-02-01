@@ -28,7 +28,7 @@ public class PlayFragment extends Fragment {
     private ImageView playButton;
     private ImageView pauseButton;
     private TextView titleText;
-    private Song song = new Song("Mengenal Nabi", "https://s3-ap-southeast-1.amazonaws.com/ikhwan-music/Mengenal+Nabi.mp3");
+    private Song song = new Song("Mengenal Nabi", "https://s3-ap-southeast-1.amazonaws.com/ikhwan-music/Mengenal+Nabi.mp3", "Qatrunnada");
 
     public PlayFragment() {
         // Required empty public constructor
