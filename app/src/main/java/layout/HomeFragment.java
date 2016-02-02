@@ -27,6 +27,8 @@ import java.util.List;
  */
 public class HomeFragment extends Fragment {
 
+    private static final String SONGS_PARAM = "songs";
+
     private OnFragmentInteractionListener mListener;
     private RecyclerView songView;
 

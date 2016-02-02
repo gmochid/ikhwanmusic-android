@@ -40,8 +40,7 @@ public class PlayFragment extends Fragment {
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
+     * Create instance of PlayFragment to instantly play the audio
      *
      * @return A new instance of fragment PlayFragment.
      */
