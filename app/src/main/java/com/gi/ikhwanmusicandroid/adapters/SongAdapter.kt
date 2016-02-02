@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import com.gi.ikhwanmusicandroid.MainActivity
 
 import com.gi.ikhwanmusicandroid.R
@@ -17,8 +16,7 @@ import com.gi.ikhwanmusicandroid.models.Song
 /**
  * Created by gmochid on 1/31/16.
  */
-class
-SongAdapter(private val songs: List<Song>) : RecyclerView.Adapter<SongAdapter.SongViewHolder>() {
+class SongAdapter(private val songs: List<Song>) : RecyclerView.Adapter<SongAdapter.SongViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.home_card, parent, false)
@@ -32,7 +30,6 @@ SongAdapter(private val songs: List<Song>) : RecyclerView.Adapter<SongAdapter.So
         holder.songImage.setImageDrawable(ContextCompat.getDrawable(holder.context, R.drawable.ic_menu_camera))
 
         holder.view.setOnClickListener ({
-            System.out.println("Play song")
             (holder.context as MainActivity).playSong(song)
         })
     }
