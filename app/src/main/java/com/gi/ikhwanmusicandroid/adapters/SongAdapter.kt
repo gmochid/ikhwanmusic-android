@@ -16,7 +16,7 @@ import com.gi.ikhwanmusicandroid.models.Song
 /**
  * Created by gmochid on 1/31/16.
  */
-class SongAdapter(private val songs: List<Song>) : RecyclerView.Adapter<SongAdapter.SongViewHolder>() {
+class SongAdapter(private var songs: List<Song>) : RecyclerView.Adapter<SongAdapter.SongViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.home_card, parent, false)

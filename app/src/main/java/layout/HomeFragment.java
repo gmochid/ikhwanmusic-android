@@ -10,9 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gi.ikhwanmusicandroid.MainActivity;
 import com.gi.ikhwanmusicandroid.R;
 import com.gi.ikhwanmusicandroid.adapters.SongAdapter;
 import com.gi.ikhwanmusicandroid.models.Song;
+import com.gi.ikhwanmusicandroid.stores.SongStore;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +29,7 @@ import java.util.List;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements SongStore.SongStoreListener {
 
     private static final String SONGS_PARAM = "songs";
 
@@ -63,7 +67,11 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(view.getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         songView.setLayoutManager(llm);
-        songView.setAdapter(new SongAdapter(sampleData()));
+
+        MainActivity mainActivity = (MainActivity) this.getActivity();
+        songView.setAdapter(new SongAdapter(mainActivity.getSongStore().getSongs()));
+
+        mainActivity.getSongStore().subscribe(this);
 
         return view;
     }
@@ -74,14 +82,9 @@ public class HomeFragment extends Fragment {
         mListener = null;
     }
 
-    public List<Song> sampleData() {
-        List<Song> songs = new ArrayList<Song>();
-
-        songs.add(new Song("Mengenal Nabi", "https://s3-ap-southeast-1.amazonaws.com/ikhwan-music/Mengenal+Nabi.mp3", "Qatrunnada"));
-        songs.add(new Song("Satu Peringatan", "https://s3-ap-southeast-1.amazonaws.com/ikhwan-music/Satu+Peringatan.mp3", "Qatrunnada"));
-        songs.add(new Song("Sembahyang Hubungan dengan Khaliqnya", "https://s3-ap-southeast-1.amazonaws.com/ikhwan-music/Sembahyang+Hubungan+Hamba+dengan+Khaliqnya.mp3", "Mawaddah"));
-
-        return songs;
+    @Override
+    public void songsUpdated(@NotNull ArrayList<Song> songs) {
+        songView.setAdapter(new SongAdapter(songs));
     }
 
     /**

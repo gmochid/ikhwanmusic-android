@@ -22,7 +22,7 @@ import layout.SettingsFragment
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     val FIREBASE_URL = "https://ikhwanmusic.firebaseio.com"
-    val songStore: SongStore = SongStore(Firebase(FIREBASE_URL))
+    lateinit var songStore: SongStore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,6 +118,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         Fabric.with(this, Crashlytics())
 
         Firebase.setAndroidContext(this)
+        songStore = SongStore(Firebase(FIREBASE_URL))
     }
 
     fun playSong(song: Song) {
