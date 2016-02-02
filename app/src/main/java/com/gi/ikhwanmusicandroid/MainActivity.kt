@@ -10,7 +10,9 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import com.crashlytics.android.Crashlytics
+import com.firebase.client.Firebase
 import com.gi.ikhwanmusicandroid.models.Song
+import com.gi.ikhwanmusicandroid.stores.SongStore
 import io.fabric.sdk.android.Fabric
 import layout.HomeFragment
 import layout.PlayFragment
@@ -19,10 +21,13 @@ import layout.SettingsFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    val FIREBASE_URL = "https://ikhwanmusic.firebaseio.com"
+    val songStore: SongStore = SongStore(Firebase(FIREBASE_URL))
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Fabric.with(this, Crashlytics())
+        librarySetup()
 
         setContentView(R.layout.activity_main)
         val toolbar = findViewById(R.id.toolbar) as Toolbar
@@ -104,6 +109,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
         drawer.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    /**
+     * Add library initialization setup here
+     */
+    fun librarySetup() {
+        Fabric.with(this, Crashlytics())
+
+        Firebase.setAndroidContext(this)
     }
 
     fun playSong(song: Song) {
