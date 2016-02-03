@@ -1,25 +1,18 @@
 package layout;
 
-import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.gi.ikhwanmusicandroid.MainActivity;
+import com.firebase.client.Firebase;
+import com.gi.ikhwanmusicandroid.BuildConfig;
 import com.gi.ikhwanmusicandroid.R;
 import com.gi.ikhwanmusicandroid.adapters.SongAdapter;
-import com.gi.ikhwanmusicandroid.models.Song;
-import com.gi.ikhwanmusicandroid.stores.SongStore;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,7 +22,7 @@ import java.util.List;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment implements SongStore.SongStoreListener {
+public class HomeFragment extends Fragment {
 
     private static final String SONGS_PARAM = "songs";
 
@@ -67,11 +60,7 @@ public class HomeFragment extends Fragment implements SongStore.SongStoreListene
         LinearLayoutManager llm = new LinearLayoutManager(view.getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         songView.setLayoutManager(llm);
-
-        MainActivity mainActivity = (MainActivity) this.getActivity();
-        songView.setAdapter(new SongAdapter(mainActivity.getSongStore().getSongs()));
-
-        mainActivity.getSongStore().subscribe(this);
+        songView.setAdapter(new SongAdapter(new Firebase(BuildConfig.FIREBASE_URL)));
 
         return view;
     }
@@ -80,11 +69,6 @@ public class HomeFragment extends Fragment implements SongStore.SongStoreListene
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    @Override
-    public void songsUpdated(@NotNull ArrayList<Song> songs) {
-        songView.setAdapter(new SongAdapter(songs));
     }
 
     /**

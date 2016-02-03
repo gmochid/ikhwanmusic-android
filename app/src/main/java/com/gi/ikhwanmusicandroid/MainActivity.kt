@@ -12,7 +12,6 @@ import android.view.MenuItem
 import com.crashlytics.android.Crashlytics
 import com.firebase.client.Firebase
 import com.gi.ikhwanmusicandroid.models.Song
-import com.gi.ikhwanmusicandroid.stores.SongStore
 import io.fabric.sdk.android.Fabric
 import layout.HomeFragment
 import layout.PlayFragment
@@ -20,9 +19,6 @@ import layout.RadioFragment
 import layout.SettingsFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    val FIREBASE_URL = "https://ikhwanmusic.firebaseio.com"
-    lateinit var songStore: SongStore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +38,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
 
-        fragmentManager.beginTransaction().replace(R.id.content_main, HomeFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.content_main, HomeFragment()).commit()
     }
 
     override fun onBackPressed() {
@@ -74,40 +70,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return super.onOptionsItemSelected(item)
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         val id = item.itemId
+        moveToPage(id)
 
-        when (id) {
-            R.id.nav_home -> {
-                var homeFragment = fragmentManager.findFragmentById(R.id.fragment_home)
-                homeFragment = if (homeFragment != null) homeFragment else HomeFragment()
-
-                fragmentManager.beginTransaction().replace(R.id.content_main, homeFragment).commit()
-            }
-            R.id.nav_play -> {
-                var playFragment = fragmentManager.findFragmentById(R.id.fragment_play)
-                playFragment = if (playFragment != null) playFragment else PlayFragment()
-
-                fragmentManager.beginTransaction().replace(R.id.content_main, playFragment).commit()
-            }
-            R.id.nav_radio -> {
-                var radioFragment = fragmentManager.findFragmentById(R.id.fragment_radio)
-                radioFragment = if (radioFragment != null) radioFragment else RadioFragment()
-
-                fragmentManager.beginTransaction().replace(R.id.content_main, radioFragment).commit()
-            }
-            R.id.nav_settings -> {
-                var settingsFragment = fragmentManager.findFragmentById(R.id.fragment_settings)
-                settingsFragment = if (settingsFragment != null) settingsFragment else SettingsFragment()
-
-                fragmentManager.beginTransaction().replace(R.id.content_main, settingsFragment).commit()
-            }
-        }
-
-        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
-        drawer.closeDrawer(GravityCompat.START)
         return true
     }
 
@@ -118,16 +85,47 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         Fabric.with(this, Crashlytics())
 
         Firebase.setAndroidContext(this)
-        songStore = SongStore(Firebase(FIREBASE_URL))
+    }
+
+    fun moveToPage(itemId: Int) {
+        when (itemId) {
+            R.id.nav_home -> {
+                var homeFragment = supportFragmentManager.findFragmentById(R.id.fragment_home)
+                homeFragment = if (homeFragment != null) homeFragment else HomeFragment()
+
+                supportFragmentManager.beginTransaction().replace(R.id.content_main, homeFragment).commit()
+            }
+            R.id.nav_play -> {
+                var playFragment = supportFragmentManager.findFragmentById(R.id.fragment_play)
+                playFragment = if (playFragment != null) playFragment else PlayFragment()
+
+                supportFragmentManager.beginTransaction().replace(R.id.content_main, playFragment).commit()
+            }
+            R.id.nav_radio -> {
+                var radioFragment = supportFragmentManager.findFragmentById(R.id.fragment_radio)
+                radioFragment = if (radioFragment != null) radioFragment else RadioFragment()
+
+                supportFragmentManager.beginTransaction().replace(R.id.content_main, radioFragment).commit()
+            }
+            R.id.nav_settings -> {
+                var settingsFragment = supportFragmentManager.findFragmentById(R.id.fragment_settings)
+                settingsFragment = if (settingsFragment != null) settingsFragment else SettingsFragment()
+
+                supportFragmentManager.beginTransaction().replace(R.id.content_main, settingsFragment).commit()
+            }
+        }
+
+        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
+        drawer.closeDrawer(GravityCompat.START)
     }
 
     fun playSong(song: Song) {
-        var playFragment = fragmentManager.findFragmentById(R.id.fragment_play) as? PlayFragment
+        var playFragment = supportFragmentManager.findFragmentById(R.id.fragment_play)
         if (playFragment != null) {
-            playFragment.playSong()
+            (playFragment as PlayFragment).playSong()
         } else {
             playFragment = PlayFragment.newInstance(song, true)
-            fragmentManager.beginTransaction().replace(R.id.content_main, playFragment).commit()
+            supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.content_main, playFragment).commit()
         }
 
         val navigationView = findViewById(R.id.nav_view) as NavigationView
