@@ -11,8 +11,12 @@ import android.view.Menu
 import android.view.MenuItem
 import com.crashlytics.android.Crashlytics
 import com.firebase.client.Firebase
+import com.gi.ikhwanmusicandroid.actions.Dispatcher
+import com.gi.ikhwanmusicandroid.actions.PlayerAction
 import com.gi.ikhwanmusicandroid.models.Song
+import com.gi.ikhwanmusicandroid.stores.PlayerStore
 import com.gi.ikhwanmusicandroid.stores.SongStore
+import com.squareup.otto.Bus
 import io.fabric.sdk.android.Fabric
 import layout.HomeFragment
 import layout.PlayFragment
@@ -22,12 +26,13 @@ import layout.SettingsFragment
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     val FIREBASE_URL = "https://ikhwanmusic.firebaseio.com"
-    lateinit var songStore: SongStore
+    lateinit var dispatcher: Dispatcher
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         librarySetup()
+        storeSetup()
 
         setContentView(R.layout.activity_main)
         val toolbar = findViewById(R.id.toolbar) as Toolbar
@@ -116,9 +121,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      */
     fun librarySetup() {
         Fabric.with(this, Crashlytics())
-
         Firebase.setAndroidContext(this)
-        songStore = SongStore(Firebase(FIREBASE_URL))
+    }
+
+    fun storeSetup() {
+        dispatcher = Dispatcher.get(Bus())
+        val playerStore = PlayerStore.get(dispatcher)
+        val songStore = SongStore.get(dispatcher, Firebase(FIREBASE_URL))
     }
 
     fun playSong(song: Song) {

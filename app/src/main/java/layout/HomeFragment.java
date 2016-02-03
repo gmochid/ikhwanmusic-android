@@ -1,6 +1,5 @@
 package layout;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -14,12 +13,10 @@ import com.gi.ikhwanmusicandroid.MainActivity;
 import com.gi.ikhwanmusicandroid.R;
 import com.gi.ikhwanmusicandroid.adapters.SongAdapter;
 import com.gi.ikhwanmusicandroid.models.Song;
-import com.gi.ikhwanmusicandroid.stores.SongStore;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,7 +26,7 @@ import java.util.List;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment implements SongStore.SongStoreListener {
+public class HomeFragment extends Fragment implements SongStoreKotlin.SongStoreListener {
 
     private static final String SONGS_PARAM = "songs";
 
