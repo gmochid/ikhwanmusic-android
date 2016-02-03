@@ -20,6 +20,11 @@ import layout.SettingsFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    var homeFragment = HomeFragment()
+    var playFragment = PlayFragment()
+    var radioFragment = RadioFragment()
+    var settingsFragment = SettingsFragment()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -90,27 +95,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun moveToPage(itemId: Int) {
         when (itemId) {
             R.id.nav_home -> {
-                var homeFragment = supportFragmentManager.findFragmentById(R.id.fragment_home)
-                homeFragment = if (homeFragment != null) homeFragment else HomeFragment()
-
                 supportFragmentManager.beginTransaction().replace(R.id.content_main, homeFragment).commit()
             }
             R.id.nav_play -> {
-                var playFragment = supportFragmentManager.findFragmentById(R.id.fragment_play)
-                playFragment = if (playFragment != null) playFragment else PlayFragment()
-
                 supportFragmentManager.beginTransaction().replace(R.id.content_main, playFragment).commit()
             }
             R.id.nav_radio -> {
-                var radioFragment = supportFragmentManager.findFragmentById(R.id.fragment_radio)
-                radioFragment = if (radioFragment != null) radioFragment else RadioFragment()
-
                 supportFragmentManager.beginTransaction().replace(R.id.content_main, radioFragment).commit()
             }
             R.id.nav_settings -> {
-                var settingsFragment = supportFragmentManager.findFragmentById(R.id.fragment_settings)
-                settingsFragment = if (settingsFragment != null) settingsFragment else SettingsFragment()
-
                 supportFragmentManager.beginTransaction().replace(R.id.content_main, settingsFragment).commit()
             }
         }
@@ -120,13 +113,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun playSong(song: Song) {
-        var playFragment = supportFragmentManager.findFragmentById(R.id.fragment_play)
-        if (playFragment != null) {
-            (playFragment as PlayFragment).playSong()
-        } else {
-            playFragment = PlayFragment.newInstance(song, true)
-            supportFragmentManager.beginTransaction().addToBackStack(null).replace(R.id.content_main, playFragment).commit()
-        }
+        playFragment.playSong()
+        System.out.println("Test")
 
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.menu.getItem(1).setChecked(true)

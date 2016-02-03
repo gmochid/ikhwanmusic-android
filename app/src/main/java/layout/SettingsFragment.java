@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gi.ikhwanmusicandroid.R;
+import com.gi.ikhwanmusicandroid.models.Song;
+import com.gi.ikhwanmusicandroid.store.SongStore;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +61,8 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        SongStore.instance().setCurrentSong(new Song("Tes", "https://s3-ap-southeast-1.amazonaws.com/ikhwan-music/Mengenal+Nabi.mp3", "Qatrunnada"));
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_settings, container, false);
     }
