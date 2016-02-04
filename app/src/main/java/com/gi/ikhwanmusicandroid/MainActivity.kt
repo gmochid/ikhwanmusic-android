@@ -11,7 +11,11 @@ import android.view.Menu
 import android.view.MenuItem
 import com.crashlytics.android.Crashlytics
 import com.firebase.client.Firebase
+import com.gi.ikhwanmusicandroid.actions.Dispatcher
 import com.gi.ikhwanmusicandroid.models.Song
+import com.gi.ikhwanmusicandroid.stores.PlayerStore
+import com.gi.ikhwanmusicandroid.stores.SongStore
+import com.squareup.otto.Bus
 import io.fabric.sdk.android.Fabric
 import layout.HomeFragment
 import layout.PlayFragment
@@ -24,11 +28,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     var playFragment = PlayFragment()
     var radioFragment = RadioFragment()
     var settingsFragment = SettingsFragment()
+    val FIREBASE_URL = "https://ikhwanmusic.firebaseio.com"
+    lateinit var dispatcher: Dispatcher
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         librarySetup()
+        storeSetup()
 
         setContentView(R.layout.activity_main)
         val toolbar = findViewById(R.id.toolbar) as Toolbar
@@ -43,7 +50,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
 
-        supportFragmentManager.beginTransaction().replace(R.id.content_main, HomeFragment()).commit()
+        supportFragmentManager.beginTransaction().replace(R.id.content_main, homeFragment).commit()
     }
 
     override fun onBackPressed() {
@@ -92,6 +99,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         Firebase.setAndroidContext(this)
     }
 
+    fun storeSetup() {
+        dispatcher = Dispatcher.get(Bus())
+        val playerStore = PlayerStore.get(dispatcher)
+        val songStore = SongStore.get(dispatcher, Firebase(FIREBASE_URL))
+    }
+
     fun moveToPage(itemId: Int) {
         when (itemId) {
             R.id.nav_home -> {
@@ -110,11 +123,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
         drawer.closeDrawer(GravityCompat.START)
+        return
     }
 
     fun playSong(song: Song) {
-        playFragment.playSong()
-        System.out.println("Test")
 
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.menu.getItem(1).setChecked(true)

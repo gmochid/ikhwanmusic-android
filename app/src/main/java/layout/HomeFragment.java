@@ -13,6 +13,11 @@ import com.firebase.client.Firebase;
 import com.gi.ikhwanmusicandroid.BuildConfig;
 import com.gi.ikhwanmusicandroid.R;
 import com.gi.ikhwanmusicandroid.adapters.SongAdapter;
+import com.gi.ikhwanmusicandroid.models.Song;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.

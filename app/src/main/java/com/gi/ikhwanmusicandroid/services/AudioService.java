@@ -14,7 +14,7 @@ public class AudioService {
     private static AudioService audioService;
 
     private MediaPlayer mediaPlayer;
-    private Song song = new Song("Mengenal Nabi", "https://s3-ap-southeast-1.amazonaws.com/ikhwan-music/Mengenal+Nabi.mp3", "Qatrunnada");;
+    private String url = "";
     private Boolean playing = false;
 
     private AudioService() {
@@ -28,20 +28,20 @@ public class AudioService {
         return audioService;
     }
 
-    public void play(Song song) {
-        if (this.song.getUrl().equals(song.getUrl())) {
+    public void play(String url) {
+        if (this.url.equals(url)) {
             if (!mediaPlayer.isPlaying()) {
                 mediaPlayer.start();
             }
             return;
         }
 
-        this.song = song;
+        this.url = url;
         mediaPlayer.reset();
         mediaPlayer.setAudioStreamType(android.media.AudioManager.STREAM_MUSIC);
 
         try {
-            mediaPlayer.setDataSource(song.getUrl());
+            mediaPlayer.setDataSource(url);
             mediaPlayer.prepare();
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,10 +56,6 @@ public class AudioService {
     public void pause() {
         mediaPlayer.pause();
         playing = false;
-    }
-
-    public Song getCurrentSong() {
-        return song;
     }
 
 }
