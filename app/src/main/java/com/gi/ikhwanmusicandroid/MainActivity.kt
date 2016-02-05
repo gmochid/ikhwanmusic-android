@@ -112,7 +112,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val playerAction = PlayerAction.getInstance(dispatcher)
 
-        homeFragment = HomeFragment.newInstance(songStore, dispatcher)
+        homeFragment = HomeFragment.newInstance(songStore, playerAction, dispatcher)
         playFragment = PlayFragment.newInstance(playerStore, playerAction, dispatcher)
         radioFragment = RadioFragment.newInstance(playerStore, playerAction, dispatcher)
         settingsFragment = SettingsFragment.newInstance()

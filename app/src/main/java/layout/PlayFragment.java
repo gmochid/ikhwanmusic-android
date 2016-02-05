@@ -63,7 +63,6 @@ public class PlayFragment extends Fragment {
         pauseButton = (ImageView) view.findViewById(R.id.pause_button);
         titleText = (TextView) view.findViewById(R.id.play_title);
 
-        titleText.setText(playerStore.getCurrentSong().getTitle());
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +75,8 @@ public class PlayFragment extends Fragment {
                 playerAction.pause();
             }
         });
+
+        onPlayerStoreChange(null);
 
         return view;
     }
@@ -90,7 +91,12 @@ public class PlayFragment extends Fragment {
     public void onPlayerStoreChange(PlayerStore.PlayerStoreChangeEvent event) {
         titleText.setText(playerStore.getCurrentSong().getTitle());
 
-        playButton.setVisibility(!playerStore.isPlaying() ? View.VISIBLE : View.INVISIBLE);
-        pauseButton.setVisibility(playerStore.isPlaying() ? View.VISIBLE : View.INVISIBLE);
+        if(playerStore.getPlayingMode() == PlayerStore.PlayingMode.SONG) {
+            playButton.setVisibility(!playerStore.isPlaying() ? View.VISIBLE : View.INVISIBLE);
+            pauseButton.setVisibility(playerStore.isPlaying() ? View.VISIBLE : View.INVISIBLE);
+        } else {
+            playButton.setVisibility(View.VISIBLE);
+            pauseButton.setVisibility(View.INVISIBLE);
+        }
     }
 }

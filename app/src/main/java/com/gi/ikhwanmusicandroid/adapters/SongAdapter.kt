@@ -10,12 +10,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.gi.ikhwanmusicandroid.MainActivity
 import com.gi.ikhwanmusicandroid.R
+import com.gi.ikhwanmusicandroid.actions.PlayerAction
 import com.gi.ikhwanmusicandroid.stores.SongStore
 
 /**
  * Created by gmochid on 1/31/16.
  */
-class SongAdapter(private var songStore: SongStore) : RecyclerView.Adapter<SongAdapter.SongViewHolder>() {
+class SongAdapter(private var songStore: SongStore, private var playerAction: PlayerAction) : RecyclerView.Adapter<SongAdapter.SongViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.home_card, parent, false)
@@ -29,7 +30,7 @@ class SongAdapter(private var songStore: SongStore) : RecyclerView.Adapter<SongA
         holder.songImage.setImageDrawable(ContextCompat.getDrawable(holder.context, R.drawable.ic_menu_camera))
 
         holder.view.setOnClickListener ({
-            (holder.context as MainActivity).playSong(song)
+            playerAction.playSong(song)
         })
     }
 

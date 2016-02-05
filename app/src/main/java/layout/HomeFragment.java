@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.gi.ikhwanmusicandroid.R;
 import com.gi.ikhwanmusicandroid.actions.Dispatcher;
+import com.gi.ikhwanmusicandroid.actions.PlayerAction;
 import com.gi.ikhwanmusicandroid.adapters.SongAdapter;
 import com.gi.ikhwanmusicandroid.stores.SongStore;
 import com.squareup.otto.Subscribe;
@@ -24,7 +25,9 @@ public class HomeFragment extends Fragment {
     private RecyclerView songView;
 
     private SongStore songStore;
+    private PlayerAction playerAction;
     private Dispatcher dispatcher;
+    private SongAdapter songAdapter;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -36,10 +39,11 @@ public class HomeFragment extends Fragment {
      *
      * @return A new instance of fragment HomeFragment.
      */
-    public static HomeFragment newInstance(SongStore songStore, Dispatcher dispatcher) {
+    public static HomeFragment newInstance(SongStore songStore, PlayerAction playerAction, Dispatcher dispatcher) {
         HomeFragment fragment = new HomeFragment();
         fragment.songStore = songStore;
         fragment.dispatcher = dispatcher;
+        fragment.playerAction = playerAction;
         return fragment;
     }
 
@@ -55,7 +59,9 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(view.getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         songView.setLayoutManager(llm);
-        songView.setAdapter(new SongAdapter(songStore));
+
+        songAdapter = new SongAdapter(songStore, playerAction);
+        songView.setAdapter(songAdapter);
 
         return view;
     }
@@ -68,7 +74,7 @@ public class HomeFragment extends Fragment {
 
     @Subscribe
     public void onSongStoreUpdated(SongStore.SongStoreChangeEvent event) {
-        songView.setAdapter(new SongAdapter(songStore));
+        songAdapter.notifyDataSetChanged();
     }
 
 }
