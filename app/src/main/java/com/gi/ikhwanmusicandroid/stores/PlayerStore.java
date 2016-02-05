@@ -20,6 +20,7 @@ public class PlayerStore extends Store {
     }
 
     private static PlayerStore instance;
+    private final Song radioSong = new Song("Ikhwan Radio", "http://philae.shoutca.st:8343/stream", "");
     private Song currentSong;
     private Boolean playing;
     private PlayingMode playingMode;
@@ -41,11 +42,16 @@ public class PlayerStore extends Store {
     @Subscribe
     public void onAction(Action action) {
         switch (action.getType()) {
-            case PlayerAction.PLAYER_PLAY:
+            case PlayerAction.PLAYER_PLAY_SONG:
                 Song song = (Song) action.getData().get(PlayerAction.KEY_SONG);
-                play(song);
+                playSong(song);
                 break;
-
+            case PlayerAction.PLAYER_PLAY_CURRENT_SONG:
+                playCurrentSong();
+                break;
+            case PlayerAction.PLAYER_PLAY_RADIO:
+                playRadio();
+                break;
             case PlayerAction.PLAYER_PAUSE:
                 pause();
                 break;
@@ -55,10 +61,25 @@ public class PlayerStore extends Store {
         }
     }
 
-    private void play(Song song) {
+    private void playSong(Song song) {
         AudioService.getInstance().play(song.getUrl());
+        currentSong = song;
         playing = true;
         playingMode = PlayingMode.SONG;
+        emitStoreChange();
+    }
+
+    private void playCurrentSong() {
+        AudioService.getInstance().play(currentSong.getUrl());
+        playing = true;
+        playingMode = PlayingMode.SONG;
+        emitStoreChange();
+    }
+
+    private void playRadio() {
+        AudioService.getInstance().play(radioSong.getUrl());
+        playing = true;
+        playingMode = PlayingMode.RADIO;
         emitStoreChange();
     }
 

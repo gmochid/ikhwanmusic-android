@@ -4,7 +4,9 @@ package com.gi.ikhwanmusicandroid.actions;
  * Created by gmochid on 2/4/16.
  */
 public class PlayerAction {
-    public static final String PLAYER_PLAY = "play";
+    public static final String PLAYER_PLAY_SONG = "play_song";
+    public static final String PLAYER_PLAY_CURRENT_SONG = "play_current_song";
+    public static final String PLAYER_PLAY_RADIO = "play_radio";
     public static final String PLAYER_PAUSE = "pause";
 
     public static final String KEY_SONG = "key-song";

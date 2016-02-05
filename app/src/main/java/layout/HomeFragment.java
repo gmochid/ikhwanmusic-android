@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.firebase.client.Firebase;
 import com.gi.ikhwanmusicandroid.BuildConfig;
 import com.gi.ikhwanmusicandroid.R;
+import com.gi.ikhwanmusicandroid.actions.Dispatcher;
 import com.gi.ikhwanmusicandroid.adapters.SongAdapter;
 import com.gi.ikhwanmusicandroid.models.Song;
 
@@ -34,6 +35,8 @@ public class HomeFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private RecyclerView songView;
 
+    private Dispatcher dispatcher;
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -44,9 +47,9 @@ public class HomeFragment extends Fragment {
      *
      * @return A new instance of fragment HomeFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance() {
+    public static HomeFragment newInstance(Dispatcher dispatcher) {
         HomeFragment fragment = new HomeFragment();
+        fragment.dispatcher = dispatcher;
         return fragment;
     }
 

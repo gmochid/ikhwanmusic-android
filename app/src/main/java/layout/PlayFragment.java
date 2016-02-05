@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gi.ikhwanmusicandroid.R;
+import com.gi.ikhwanmusicandroid.actions.Dispatcher;
 import com.gi.ikhwanmusicandroid.models.Song;
 
 /**
@@ -27,6 +28,8 @@ public class PlayFragment extends Fragment {
     private ImageView pauseButton;
     private TextView titleText;
 
+    private Dispatcher dispatcher;
+
     public PlayFragment() {
     }
 
@@ -35,8 +38,9 @@ public class PlayFragment extends Fragment {
      *
      * @return A new instance of fragment PlayFragment.
      */
-    public static PlayFragment newInstance() {
+    public static PlayFragment newInstance(Dispatcher dispatcher) {
         PlayFragment fragment = new PlayFragment();
+        fragment.dispatcher = dispatcher;
         return fragment;
     }
 
