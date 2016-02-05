@@ -24,10 +24,10 @@ import layout.SettingsFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    var homeFragment = HomeFragment()
-    var playFragment = PlayFragment()
-    var radioFragment = RadioFragment()
-    var settingsFragment = SettingsFragment()
+    lateinit var homeFragment: HomeFragment
+    lateinit var playFragment: PlayFragment
+    lateinit var radioFragment: RadioFragment
+    lateinit var settingsFragment: SettingsFragment
     val FIREBASE_URL = "https://ikhwanmusic.firebaseio.com"
     lateinit var dispatcher: Dispatcher
 
