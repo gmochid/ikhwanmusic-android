@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Created by gmochid on 2/4/16.
  */
 public class SongStore extends Store {
-    private static SongStore instance;
+    private static SongStore instance = null;
     private ArrayList<Song> songs;
     private Firebase ref;
 

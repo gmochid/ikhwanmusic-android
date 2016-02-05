@@ -15,6 +15,7 @@ import com.gi.ikhwanmusicandroid.actions.Dispatcher;
 import com.gi.ikhwanmusicandroid.actions.PlayerAction;
 import com.gi.ikhwanmusicandroid.models.Song;
 import com.gi.ikhwanmusicandroid.stores.PlayerStore;
+import com.squareup.otto.Subscribe;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +33,7 @@ public class PlayFragment extends Fragment {
 
     private PlayerStore playerStore;
     private PlayerAction playerAction;
+    private Dispatcher dispatcher;
 
     public PlayFragment() {
     }
@@ -41,26 +43,12 @@ public class PlayFragment extends Fragment {
      *
      * @return A new instance of fragment PlayFragment.
      */
-    public static PlayFragment newInstance(PlayerStore playerStore, PlayerAction playerAction) {
+    public static PlayFragment newInstance(PlayerStore playerStore, PlayerAction playerAction, Dispatcher dispatcher) {
         PlayFragment fragment = new PlayFragment();
         fragment.playerStore = playerStore;
         fragment.playerAction = playerAction;
+        fragment.dispatcher = dispatcher;
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onViewStateRestored(Bundle savedInstanceState) {
-        super.onViewStateRestored(savedInstanceState);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -69,19 +57,23 @@ public class PlayFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_play, container, false);
 
+        dispatcher.register(this);
+
         playButton = (ImageView) view.findViewById(R.id.play_button);
         pauseButton = (ImageView) view.findViewById(R.id.pause_button);
         titleText = (TextView) view.findViewById(R.id.play_title);
 
-        //titleText.setText(songStore.getCurrentSong().getTitle());
+        titleText.setText(playerStore.getCurrentSong().getTitle());
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                playerAction.playCurrentSong();
             }
         });
         pauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                playerAction.pause();
             }
         });
 
@@ -89,17 +81,16 @@ public class PlayFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onDestroyView() {
+        super.onDestroyView();
+        dispatcher.unregister(this);
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
+    @Subscribe
+    public void onPlayerStoreChange(PlayerStore.PlayerStoreChangeEvent event) {
+        titleText.setText(playerStore.getCurrentSong().getTitle());
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
+        playButton.setVisibility(!playerStore.isPlaying() ? View.VISIBLE : View.INVISIBLE);
+        pauseButton.setVisibility(playerStore.isPlaying() ? View.VISIBLE : View.INVISIBLE);
     }
 }

@@ -13,6 +13,7 @@ import com.gi.ikhwanmusicandroid.actions.Dispatcher;
 import com.gi.ikhwanmusicandroid.actions.PlayerAction;
 import com.gi.ikhwanmusicandroid.services.AudioService;
 import com.gi.ikhwanmusicandroid.stores.PlayerStore;
+import com.squareup.otto.Subscribe;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +26,7 @@ public class RadioFragment extends Fragment {
 
     private PlayerStore playerStore;
     private PlayerAction playerAction;
+    private Dispatcher dispatcher;
 
     public RadioFragment() {
         // Required empty public constructor
@@ -36,17 +38,12 @@ public class RadioFragment extends Fragment {
      *
      * @return A new instance of fragment RadioFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static RadioFragment newInstance(PlayerStore playerStore, PlayerAction playerAction) {
+    public static RadioFragment newInstance(PlayerStore playerStore, PlayerAction playerAction, Dispatcher dispatcher) {
         RadioFragment fragment = new RadioFragment();
         fragment.playerStore = playerStore;
         fragment.playerAction = playerAction;
+        fragment.dispatcher = dispatcher;
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -54,25 +51,21 @@ public class RadioFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_radio, container, false);
 
+        dispatcher.register(this);
+
         playButton = (ImageView) view.findViewById(R.id.play_button);
         pauseButton = (ImageView) view.findViewById(R.id.pause_button);
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AudioService.getInstance().play("http://philae.shoutca.st:8343/stream");
-
-                v.setVisibility(View.INVISIBLE);
-                pauseButton.setVisibility(View.VISIBLE);
+                playerAction.playRadio();
             }
         });
         pauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AudioService.getInstance().pause();
-
-                v.setVisibility(View.INVISIBLE);
-                playButton.setVisibility(View.VISIBLE);
+                playerAction.pause();
             }
         });
 
@@ -80,12 +73,14 @@ public class RadioFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void onDestroyView() {
+        super.onDestroyView();
+        dispatcher.unregister(this);
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
+    @Subscribe
+    public void onPlayerStoreChange(PlayerStore.PlayerStoreChangeEvent event) {
+        playButton.setVisibility(!playerStore.isPlaying() ? View.VISIBLE : View.INVISIBLE);
+        pauseButton.setVisibility(playerStore.isPlaying() ? View.VISIBLE : View.INVISIBLE);
     }
 }

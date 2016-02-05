@@ -8,38 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.firebase.client.DataSnapshot
-import com.firebase.client.Firebase
-import com.firebase.client.FirebaseError
-import com.firebase.client.ValueEventListener
 import com.gi.ikhwanmusicandroid.MainActivity
-
 import com.gi.ikhwanmusicandroid.R
-import com.gi.ikhwanmusicandroid.models.Song
-import java.util.*
+import com.gi.ikhwanmusicandroid.stores.SongStore
 
 /**
  * Created by gmochid on 1/31/16.
  */
-class SongAdapter(private var ref: Firebase) : RecyclerView.Adapter<SongAdapter.SongViewHolder>() {
-
-    private var songs: ArrayList<Song> = ArrayList()
-
-    init {
-        ref.child("songs").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (songSnapshot in dataSnapshot.children) {
-                    var song = songSnapshot.getValue(Song::class.java)
-                    songs.add(song)
-                    notifyItemInserted(songs.size - 1)
-                }
-            }
-
-            override fun onCancelled(firebaseError: FirebaseError) {
-                System.err.println(firebaseError.message)
-            }
-        })
-    }
+class SongAdapter(private var songStore: SongStore) : RecyclerView.Adapter<SongAdapter.SongViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.home_card, parent, false)
@@ -47,7 +23,7 @@ class SongAdapter(private var ref: Firebase) : RecyclerView.Adapter<SongAdapter.
     }
 
     override fun onBindViewHolder(holder: SongViewHolder, position: Int) {
-        val song = songs[position]
+        val song = songStore.songs[position]
         holder.songTitle.text = song.title
         holder.songArtist.text = song.artist
         holder.songImage.setImageDrawable(ContextCompat.getDrawable(holder.context, R.drawable.ic_menu_camera))
@@ -58,7 +34,7 @@ class SongAdapter(private var ref: Firebase) : RecyclerView.Adapter<SongAdapter.
     }
 
     override fun getItemCount(): Int {
-        return songs.size
+        return songStore.songs.size
     }
 
     class SongViewHolder(var view: View, var context: Context) : RecyclerView.ViewHolder(view) {

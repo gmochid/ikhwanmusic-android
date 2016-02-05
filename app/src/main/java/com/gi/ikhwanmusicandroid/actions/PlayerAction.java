@@ -1,5 +1,7 @@
 package com.gi.ikhwanmusicandroid.actions;
 
+import com.gi.ikhwanmusicandroid.models.Song;
+
 /**
  * Created by gmochid on 2/4/16.
  */
@@ -23,5 +25,22 @@ public class PlayerAction {
             instance = new PlayerAction(dispatcher);
         }
         return instance;
+    }
+
+    public void playSong(Song song) {
+        dispatcher.dispatch(PLAYER_PLAY_SONG,
+                KEY_SONG, song);
+    }
+
+    public void playCurrentSong() {
+        dispatcher.dispatch(PLAYER_PLAY_CURRENT_SONG);
+    }
+
+    public void playRadio() {
+        dispatcher.dispatch(PLAYER_PLAY_RADIO);
+    }
+
+    public void pause() {
+        dispatcher.dispatch(PLAYER_PAUSE);
     }
 }

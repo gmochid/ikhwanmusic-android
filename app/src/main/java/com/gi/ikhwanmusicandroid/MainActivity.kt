@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import com.crashlytics.android.Crashlytics
+import com.crashlytics.android.answers.Answers
 import com.firebase.client.Firebase
 import com.gi.ikhwanmusicandroid.actions.Dispatcher
 import com.gi.ikhwanmusicandroid.actions.PlayerAction
@@ -29,7 +30,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var playFragment: PlayFragment
     lateinit var radioFragment: RadioFragment
     lateinit var settingsFragment: SettingsFragment
-    val FIREBASE_URL = "https://ikhwanmusic.firebaseio.com"
     lateinit var dispatcher: Dispatcher
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,8 +95,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
      * Add library initialization setup here
      */
     fun librarySetup() {
-        Fabric.with(this, Crashlytics())
-
         Firebase.setAndroidContext(this)
     }
 
@@ -106,13 +104,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun fragmentSetup() {
         dispatcher = Dispatcher.get(Bus())
         val playerStore = PlayerStore.getInstance(dispatcher)
-        val songStore = SongStore.getInstance(dispatcher, Firebase(FIREBASE_URL))
+        val songStore = SongStore.getInstance(dispatcher, Firebase(BuildConfig.FIREBASE_URL))
+
+        dispatcher.register(this)
+        dispatcher.register(playerStore)
+        dispatcher.register(songStore)
 
         val playerAction = PlayerAction.getInstance(dispatcher)
 
-        homeFragment = HomeFragment.newInstance(songStore)
-        playFragment = PlayFragment.newInstance(playerStore, playerAction)
-        radioFragment = RadioFragment.newInstance(playerStore, playerAction)
+        homeFragment = HomeFragment.newInstance(songStore, dispatcher)
+        playFragment = PlayFragment.newInstance(playerStore, playerAction, dispatcher)
+        radioFragment = RadioFragment.newInstance(playerStore, playerAction, dispatcher)
         settingsFragment = SettingsFragment.newInstance()
     }
 
@@ -138,7 +140,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun playSong(song: Song) {
-
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.menu.getItem(1).setChecked(true)
     }

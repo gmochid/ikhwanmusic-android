@@ -77,6 +77,7 @@ public class PlayerStore extends Store {
     }
 
     private void playRadio() {
+        System.out.println("Radio played");
         AudioService.getInstance().play(radioSong.getUrl());
         playing = true;
         playingMode = PlayingMode.RADIO;
