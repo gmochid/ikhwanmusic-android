@@ -41,7 +41,7 @@ public class SongStore extends Store {
         });
     }
 
-    public static SongStore get(Dispatcher dispatcher, Firebase rootFirebase) {
+    public static SongStore getInstance(Dispatcher dispatcher, Firebase rootFirebase) {
         if (instance == null) {
             instance = new SongStore(dispatcher, rootFirebase);
         }

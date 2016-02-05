@@ -12,6 +12,7 @@ import android.view.MenuItem
 import com.crashlytics.android.Crashlytics
 import com.firebase.client.Firebase
 import com.gi.ikhwanmusicandroid.actions.Dispatcher
+import com.gi.ikhwanmusicandroid.actions.PlayerAction
 import com.gi.ikhwanmusicandroid.models.Song
 import com.gi.ikhwanmusicandroid.stores.PlayerStore
 import com.gi.ikhwanmusicandroid.stores.SongStore
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onCreate(savedInstanceState)
 
         librarySetup()
-        storeSetup()
+        fragmentSetup()
 
         setContentView(R.layout.activity_main)
         val toolbar = findViewById(R.id.toolbar) as Toolbar
@@ -99,10 +100,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         Firebase.setAndroidContext(this)
     }
 
-    fun storeSetup() {
+    /**
+     * Add fragment initialization setup here
+     */
+    fun fragmentSetup() {
         dispatcher = Dispatcher.get(Bus())
-        val playerStore = PlayerStore.get(dispatcher)
-        val songStore = SongStore.get(dispatcher, Firebase(FIREBASE_URL))
+        val playerStore = PlayerStore.getInstance(dispatcher)
+        val songStore = SongStore.getInstance(dispatcher, Firebase(FIREBASE_URL))
+
+        val playerAction = PlayerAction.getInstance(dispatcher)
+
+        homeFragment = HomeFragment.newInstance(songStore)
+        playFragment = PlayFragment.newInstance(playerStore, playerAction)
+        radioFragment = RadioFragment.newInstance(playerStore, playerAction)
+        settingsFragment = SettingsFragment.newInstance()
     }
 
     fun moveToPage(itemId: Int) {

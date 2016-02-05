@@ -10,7 +10,9 @@ import android.widget.ImageView;
 
 import com.gi.ikhwanmusicandroid.R;
 import com.gi.ikhwanmusicandroid.actions.Dispatcher;
+import com.gi.ikhwanmusicandroid.actions.PlayerAction;
 import com.gi.ikhwanmusicandroid.services.AudioService;
+import com.gi.ikhwanmusicandroid.stores.PlayerStore;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,7 +23,8 @@ public class RadioFragment extends Fragment {
     private ImageView playButton;
     private ImageView pauseButton;
 
-    private Dispatcher dispatcher;
+    private PlayerStore playerStore;
+    private PlayerAction playerAction;
 
     public RadioFragment() {
         // Required empty public constructor
@@ -34,9 +37,10 @@ public class RadioFragment extends Fragment {
      * @return A new instance of fragment RadioFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static RadioFragment newInstance(Dispatcher dispatcher) {
+    public static RadioFragment newInstance(PlayerStore playerStore, PlayerAction playerAction) {
         RadioFragment fragment = new RadioFragment();
-        fragment.dispatcher = dispatcher;
+        fragment.playerStore = playerStore;
+        fragment.playerAction = playerAction;
         return fragment;
     }
 

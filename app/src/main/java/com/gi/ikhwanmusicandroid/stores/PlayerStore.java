@@ -28,10 +28,10 @@ public class PlayerStore extends Store {
     protected PlayerStore(Dispatcher dispatcher) {
         super(dispatcher);
         playing = false;
-        currentSong = null;
+        currentSong = new Song("Tes", "https://s3-ap-southeast-1.amazonaws.com/ikhwan-music/Mengenal+Nabi.mp3", "Qatrunnada");
     }
 
-    public static PlayerStore get(Dispatcher dispatcher) {
+    public static PlayerStore getInstance(Dispatcher dispatcher) {
         if (instance == null) {
             instance = new PlayerStore(dispatcher);
         }

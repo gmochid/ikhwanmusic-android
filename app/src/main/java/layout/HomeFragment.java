@@ -15,6 +15,7 @@ import com.gi.ikhwanmusicandroid.R;
 import com.gi.ikhwanmusicandroid.actions.Dispatcher;
 import com.gi.ikhwanmusicandroid.adapters.SongAdapter;
 import com.gi.ikhwanmusicandroid.models.Song;
+import com.gi.ikhwanmusicandroid.stores.SongStore;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -35,7 +36,7 @@ public class HomeFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private RecyclerView songView;
 
-    private Dispatcher dispatcher;
+    private SongStore songStore;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -47,9 +48,9 @@ public class HomeFragment extends Fragment {
      *
      * @return A new instance of fragment HomeFragment.
      */
-    public static HomeFragment newInstance(Dispatcher dispatcher) {
+    public static HomeFragment newInstance(SongStore songStore) {
         HomeFragment fragment = new HomeFragment();
-        fragment.dispatcher = dispatcher;
+        fragment.songStore = songStore;
         return fragment;
     }
 

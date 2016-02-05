@@ -18,7 +18,7 @@ public class PlayerAction {
         this.dispatcher = dispatcher;
     }
 
-    public static PlayerAction get(Dispatcher dispatcher) {
+    public static PlayerAction getInstance(Dispatcher dispatcher) {
         if (instance == null) {
             instance = new PlayerAction(dispatcher);
         }
