@@ -39,4 +39,14 @@
         android:visibility="invisible"
         android:src="@drawable/ic_pause_circle_outline_24dp" />
 
+    <ProgressBar
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:id="@+id/loading_bar"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:indeterminate="true" />
+
 </RelativeLayout>

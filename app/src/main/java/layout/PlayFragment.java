@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gi.ikhwanmusicandroid.R;
@@ -29,6 +30,7 @@ public class PlayFragment extends Fragment {
 
     private ImageView playButton;
     private ImageView pauseButton;
+    private ProgressBar loadingBar;
     private TextView titleText;
 
     private PlayerStore playerStore;
@@ -62,10 +64,13 @@ public class PlayFragment extends Fragment {
         playButton = (ImageView) view.findViewById(R.id.play_button);
         pauseButton = (ImageView) view.findViewById(R.id.pause_button);
         titleText = (TextView) view.findViewById(R.id.play_title);
+        loadingBar = (ProgressBar) view.findViewById(R.id.loading_bar);
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadingBar.setVisibility(View.VISIBLE);
+                playButton.setVisibility(View.INVISIBLE);
                 playerAction.playCurrentSong();
             }
         });
@@ -98,5 +103,6 @@ public class PlayFragment extends Fragment {
             playButton.setVisibility(View.VISIBLE);
             pauseButton.setVisibility(View.INVISIBLE);
         }
+        loadingBar.setVisibility(View.INVISIBLE);
     }
 }

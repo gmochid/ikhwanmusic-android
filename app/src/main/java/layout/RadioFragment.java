@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.gi.ikhwanmusicandroid.R;
 import com.gi.ikhwanmusicandroid.actions.Dispatcher;
@@ -26,6 +27,7 @@ public class RadioFragment extends Fragment {
 
     private PlayerStore playerStore;
     private PlayerAction playerAction;
+    private ProgressBar loadingBar;
     private Dispatcher dispatcher;
 
     public RadioFragment() {
@@ -55,10 +57,12 @@ public class RadioFragment extends Fragment {
 
         playButton = (ImageView) view.findViewById(R.id.play_button);
         pauseButton = (ImageView) view.findViewById(R.id.pause_button);
+        loadingBar = (ProgressBar) view.findViewById(R.id.loading_bar);
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadingBar.setVisibility(View.VISIBLE);
                 playerAction.playRadio();
             }
         });
@@ -68,6 +72,8 @@ public class RadioFragment extends Fragment {
                 playerAction.pause();
             }
         });
+
+        onPlayerStoreChange(null);
 
         return view;
     }
@@ -85,7 +91,8 @@ public class RadioFragment extends Fragment {
             pauseButton.setVisibility(playerStore.isPlaying() ? View.VISIBLE : View.INVISIBLE);
         } else {
             playButton.setVisibility(View.VISIBLE);
-            pauseButton.setVisibility(View.VISIBLE);
+            pauseButton.setVisibility(View.INVISIBLE);
         }
+        loadingBar.setVisibility(View.INVISIBLE);
     }
 }
