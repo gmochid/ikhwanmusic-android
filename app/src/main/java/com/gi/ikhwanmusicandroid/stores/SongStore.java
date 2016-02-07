@@ -6,6 +6,8 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.gi.ikhwanmusicandroid.actions.Action;
 import com.gi.ikhwanmusicandroid.actions.Dispatcher;
+import com.gi.ikhwanmusicandroid.actions.PlayerAction;
+import com.gi.ikhwanmusicandroid.actions.SongAction;
 import com.gi.ikhwanmusicandroid.models.Song;
 import com.squareup.otto.Subscribe;
 
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 public class SongStore extends Store {
     private static SongStore instance = null;
     private ArrayList<Song> songs;
+    private ArrayList<Song> queryResult;
     private Firebase ref;
 
     protected SongStore(Dispatcher dispatcher, Firebase rootFirebase) {
@@ -55,7 +58,32 @@ public class SongStore extends Store {
     @Override
     @Subscribe
     public void onAction(Action action) {
+        switch (action.getType()) {
+            case SongAction.SONG_SEARCH:
+                String query = (String) action.getData().get(SongAction.KEY_QUERY);
+                search(query);
+                break;
+        }
+    }
 
+    private void search(String query) {
+        ref.equalTo(query).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                queryResult.clear();
+                for (DataSnapshot songSnapshot : dataSnapshot.getChildren()) {
+                    Song song = songSnapshot.getValue(Song.class);
+                    queryResult.add(song);
+                }
+                emitStoreChange();
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.err.println(firebaseError.getMessage());
+            }
+        });
+        emitStoreChange();
     }
 
     @Override

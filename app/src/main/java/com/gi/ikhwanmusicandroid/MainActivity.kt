@@ -1,16 +1,17 @@
 package com.gi.ikhwanmusicandroid
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.SearchView
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.answers.Answers
 import com.firebase.client.Firebase
 import com.gi.ikhwanmusicandroid.actions.Dispatcher
 import com.gi.ikhwanmusicandroid.actions.PlayerAction
@@ -18,7 +19,6 @@ import com.gi.ikhwanmusicandroid.models.Song
 import com.gi.ikhwanmusicandroid.stores.PlayerStore
 import com.gi.ikhwanmusicandroid.stores.SongStore
 import com.squareup.otto.Bus
-import io.fabric.sdk.android.Fabric
 import layout.HomeFragment
 import layout.PlayFragment
 import layout.RadioFragment
@@ -66,6 +66,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
+
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = menu.findItem(R.id.action_search).actionView as SearchView
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        searchView.setOnSearchClickListener {
+
+        }
+
         return true
     }
 
@@ -74,12 +83,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true
-        }
-
         return super.onOptionsItemSelected(item)
     }
 

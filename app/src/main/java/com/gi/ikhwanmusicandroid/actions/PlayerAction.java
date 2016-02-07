@@ -11,7 +11,7 @@ public class PlayerAction {
     public static final String PLAYER_PLAY_RADIO = "play_radio";
     public static final String PLAYER_PAUSE = "pause";
 
-    public static final String KEY_SONG = "key-song";
+    public static final String KEY_SONG = "key_song";
 
     private static PlayerAction instance;
     final Dispatcher dispatcher;
