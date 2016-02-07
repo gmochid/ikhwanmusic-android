@@ -19,10 +19,7 @@ import com.gi.ikhwanmusicandroid.models.Song
 import com.gi.ikhwanmusicandroid.stores.PlayerStore
 import com.gi.ikhwanmusicandroid.stores.SongStore
 import com.squareup.otto.Bus
-import layout.HomeFragment
-import layout.PlayFragment
-import layout.RadioFragment
-import layout.SettingsFragment
+import layout.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -69,10 +66,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = menu.findItem(R.id.action_search).actionView as SearchView
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
 
-        searchView.setOnSearchClickListener {
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                supportFragmentManager.beginTransaction().replace(R.id.content_main, SearchResultFragment()).commit()
+                return true
+            }
+            override fun onQueryTextChange(query: String?): Boolean = true
+        })
 
+        searchView.setOnQueryTextFocusChangeListener { view, b ->
+            supportFragmentManager.beginTransaction().replace(R.id.content_main, homeFragment).commit()
         }
 
         return true
