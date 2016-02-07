@@ -14,11 +14,10 @@ public abstract class Store {
         this.dispatcher = dispatcher;
     }
 
-    void emitStoreChange() {
-        dispatcher.emitChange(changeEvent());
+    void emitStoreChange(StoreChangeEvent event) {
+        dispatcher.emitChange(event);
     }
 
-    abstract StoreChangeEvent changeEvent();
     public abstract void onAction(Action action);
 
     public interface StoreChangeEvent {}

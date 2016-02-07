@@ -9,6 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gi.ikhwanmusicandroid.R;
+import com.gi.ikhwanmusicandroid.actions.Dispatcher;
+import com.gi.ikhwanmusicandroid.actions.PlayerAction;
+import com.gi.ikhwanmusicandroid.stores.SongStore;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,7 +30,7 @@ public class SearchResultFragment extends Fragment {
      * @return A new instance of fragment SearchResultFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SearchResultFragment newInstance(String param1, String param2) {
+    public static SearchResultFragment newInstance(SongStore songStore, PlayerAction playerAction, Dispatcher dispatcher) {
         SearchResultFragment fragment = new SearchResultFragment();
         return fragment;
     }

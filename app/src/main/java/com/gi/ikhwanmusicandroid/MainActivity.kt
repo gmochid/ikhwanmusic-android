@@ -15,10 +15,11 @@ import android.view.MenuItem
 import com.firebase.client.Firebase
 import com.gi.ikhwanmusicandroid.actions.Dispatcher
 import com.gi.ikhwanmusicandroid.actions.PlayerAction
-import com.gi.ikhwanmusicandroid.models.Song
+import com.gi.ikhwanmusicandroid.actions.SongAction
 import com.gi.ikhwanmusicandroid.stores.PlayerStore
 import com.gi.ikhwanmusicandroid.stores.SongStore
 import com.squareup.otto.Bus
+import com.squareup.otto.Subscribe
 import layout.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -27,6 +28,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var playFragment: PlayFragment
     lateinit var radioFragment: RadioFragment
     lateinit var settingsFragment: SettingsFragment
+    lateinit var searchResultFragment: SearchResultFragment
     lateinit var dispatcher: Dispatcher
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,7 +72,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
-                supportFragmentManager.beginTransaction().replace(R.id.content_main, SearchResultFragment()).commit()
+                SongAction.getInstance(dispatcher).search(query)
                 return true
             }
             override fun onQueryTextChange(query: String?): Boolean = true
@@ -87,7 +89,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        val id = item.itemId
         return super.onOptionsItemSelected(item)
     }
 
@@ -124,6 +125,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         playFragment = PlayFragment.newInstance(playerStore, playerAction, dispatcher)
         radioFragment = RadioFragment.newInstance(playerStore, playerAction, dispatcher)
         settingsFragment = SettingsFragment.newInstance()
+        searchResultFragment = SearchResultFragment.newInstance(songStore, playerAction, dispatcher)
     }
 
     fun moveToPage(itemId: Int) {
@@ -147,8 +149,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return
     }
 
-    fun playSong(song: Song) {
-        val navigationView = findViewById(R.id.nav_view) as NavigationView
-        navigationView.menu.getItem(1).setChecked(true)
+    @Subscribe
+    fun onSongStoreSearchChangeEvent(event: SongStore.SongStoreSearchChangeEvent) {
+        supportFragmentManager.beginTransaction().replace(R.id.content_main, searchResultFragment).commit()
     }
 }

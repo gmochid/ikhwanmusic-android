@@ -25,6 +25,7 @@ public class SongStore extends Store {
     protected SongStore(Dispatcher dispatcher, Firebase rootFirebase) {
         super(dispatcher);
         songs = new ArrayList<>();
+        queryResult = new ArrayList<>();
         ref = rootFirebase.child("songs");
 
         ref.addValueEventListener(new ValueEventListener() {
@@ -34,7 +35,7 @@ public class SongStore extends Store {
                     Song song = songSnapshot.getValue(Song.class);
                     songs.add(song);
                 }
-                emitStoreChange();
+                emitStoreChange(new SongStoreChangeEvent());
             }
 
             @Override
@@ -55,6 +56,10 @@ public class SongStore extends Store {
         return songs;
     }
 
+    public ArrayList<Song> getQueryResult() {
+        return queryResult;
+    }
+
     @Override
     @Subscribe
     public void onAction(Action action) {
@@ -66,16 +71,18 @@ public class SongStore extends Store {
         }
     }
 
-    private void search(String query) {
+    private void search(final String query) {
         ref.equalTo(query).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 queryResult.clear();
+                System.out.println(query);
                 for (DataSnapshot songSnapshot : dataSnapshot.getChildren()) {
                     Song song = songSnapshot.getValue(Song.class);
                     queryResult.add(song);
+                    System.out.println(song.getTitle());
                 }
-                emitStoreChange();
+                emitStoreChange(new SongStoreSearchChangeEvent());
             }
 
             @Override
@@ -83,14 +90,11 @@ public class SongStore extends Store {
                 System.err.println(firebaseError.getMessage());
             }
         });
-        emitStoreChange();
-    }
-
-    @Override
-    StoreChangeEvent changeEvent() {
-        return new SongStoreChangeEvent();
     }
 
     public class SongStoreChangeEvent implements StoreChangeEvent {
+    }
+
+    public class SongStoreSearchChangeEvent implements StoreChangeEvent {
     }
 }

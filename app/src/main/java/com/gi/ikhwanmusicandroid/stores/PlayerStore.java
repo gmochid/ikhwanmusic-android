@@ -66,14 +66,14 @@ public class PlayerStore extends Store {
         currentSong = song;
         playing = true;
         playingMode = PlayingMode.SONG;
-        emitStoreChange();
+        emitStoreChange(new PlayerStoreChangeEvent());
     }
 
     private void playCurrentSong() {
         AudioService.getInstance().play(currentSong.getUrl());
         playing = true;
         playingMode = PlayingMode.SONG;
-        emitStoreChange();
+        emitStoreChange(new PlayerStoreChangeEvent());
     }
 
     private void playRadio() {
@@ -81,14 +81,14 @@ public class PlayerStore extends Store {
         AudioService.getInstance().play(radioSong.getUrl());
         playing = true;
         playingMode = PlayingMode.RADIO;
-        emitStoreChange();
+        emitStoreChange(new PlayerStoreChangeEvent());
     }
 
     private void pause() {
         AudioService.getInstance().pause();
         playing = false;
         playingMode = PlayingMode.RADIO;
-        emitStoreChange();
+        emitStoreChange(new PlayerStoreChangeEvent());
     }
 
     public Song getCurrentSong() {
@@ -101,11 +101,6 @@ public class PlayerStore extends Store {
 
     public PlayingMode getPlayingMode() {
         return playingMode;
-    }
-
-    @Override
-    StoreChangeEvent changeEvent() {
-        return new PlayerStoreChangeEvent();
     }
 
     public class PlayerStoreChangeEvent implements StoreChangeEvent {
