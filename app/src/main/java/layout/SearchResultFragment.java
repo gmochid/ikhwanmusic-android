@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.gi.ikhwanmusicandroid.R;
 import com.gi.ikhwanmusicandroid.actions.Dispatcher;
 import com.gi.ikhwanmusicandroid.actions.PlayerAction;
+import com.gi.ikhwanmusicandroid.adapters.SearchResultAdapter;
 import com.gi.ikhwanmusicandroid.adapters.SongAdapter;
 import com.gi.ikhwanmusicandroid.stores.SongStore;
 import com.squareup.otto.Subscribe;
@@ -28,8 +29,8 @@ public class SearchResultFragment extends Fragment {
     private PlayerAction playerAction;
     private Dispatcher dispatcher;
 
-    private RecyclerView resultView;
-    private SongAdapter songAdapter;
+    private RecyclerView searchResultView;
+    private SearchResultAdapter searchResultAdapter;
 
     public SearchResultFragment() {
     }
@@ -56,14 +57,14 @@ public class SearchResultFragment extends Fragment {
 
         dispatcher.register(this);
 
-        resultView = (RecyclerView) view.findViewById(R.id.song_recycler_view);
-        resultView.setHasFixedSize(true);
+        searchResultView = (RecyclerView) view.findViewById(R.id.song_recycler_view);
+        searchResultView.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(view.getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
-        resultView.setLayoutManager(llm);
+        searchResultView.setLayoutManager(llm);
 
-        songAdapter = new SongAdapter(songStore, playerAction);
-        resultView.setAdapter(songAdapter);
+        searchResultAdapter = new SearchResultAdapter(songStore, playerAction);
+        searchResultView.setAdapter(searchResultAdapter);
 
         return view;
     }
@@ -75,6 +76,12 @@ public class SearchResultFragment extends Fragment {
 
     @Subscribe
     public void onSongStoreSearchUpdated(SongStore.SongStoreSearchChangeEvent event) {
-        songAdapter.notifyDataSetChanged();
+        searchResultAdapter.notifyDataSetChanged();
+
+        if (songStore.getQueryResult().isEmpty()) {
+            searchResultView.setVisibility(View.GONE);
+        } else {
+            searchResultView.setVisibility(View.VISIBLE);
+        }
     }
 }

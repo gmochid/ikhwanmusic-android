@@ -8,23 +8,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import com.gi.ikhwanmusicandroid.MainActivity
 import com.gi.ikhwanmusicandroid.R
 import com.gi.ikhwanmusicandroid.actions.PlayerAction
 import com.gi.ikhwanmusicandroid.stores.SongStore
 
 /**
- * Created by gmochid on 1/31/16.
+ * Created by gmochid on 2016/02/09.
  */
-class SongAdapter(private var songStore: SongStore, private var playerAction: PlayerAction) : RecyclerView.Adapter<SongAdapter.SongViewHolder>() {
+class SearchResultAdapter(private var songStore: SongStore, private var playerAction: PlayerAction) : RecyclerView.Adapter<SearchResultAdapter.SearchResultViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.song_card, parent, false)
-        return SongViewHolder(view, parent.context)
+        return SearchResultViewHolder(view, parent.context)
     }
 
-    override fun onBindViewHolder(holder: SongViewHolder, position: Int) {
-        val song = songStore.songs[position]
+    override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {
+        val song = songStore.queryResult[position]
         holder.songTitle.text = song.title
         holder.songArtist.text = song.artist
         holder.songImage.setImageDrawable(ContextCompat.getDrawable(holder.context, R.drawable.ic_menu_camera))
@@ -35,10 +34,10 @@ class SongAdapter(private var songStore: SongStore, private var playerAction: Pl
     }
 
     override fun getItemCount(): Int {
-        return songStore.songs.size
+        return songStore.queryResult.size
     }
 
-    class SongViewHolder(var view: View, var context: Context) : RecyclerView.ViewHolder(view) {
+    class SearchResultViewHolder(var view: View, var context: Context) : RecyclerView.ViewHolder(view) {
         var songTitle: TextView
         var songArtist: TextView
         var songImage: ImageView
