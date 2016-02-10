@@ -48,7 +48,6 @@ public class AudioService {
             return;
         }
 
-        System.out.println("play");
         mediaPlayer.start();
         playing = true;
     }
