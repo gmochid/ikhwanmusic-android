@@ -71,6 +71,7 @@ public class SearchResultFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+        super.onDestroyView();
         dispatcher.unregister(this);
     }
 

@@ -34,7 +34,6 @@ public class Dispatcher {
     }
 
     public void dispatch(String type, Object... data) {
-        System.out.println(type);
         if (isEmpty(type)) {
             throw new IllegalArgumentException("Type must not be empty");
         }

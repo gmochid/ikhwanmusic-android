@@ -72,21 +72,13 @@ public class SongStore extends Store {
     }
 
     private void search(final String query) {
-        ref.equalTo(query).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                queryResult.clear();
-                for (DataSnapshot songSnapshot : dataSnapshot.getChildren()) {
-                    Song song = songSnapshot.getValue(Song.class);
-                }
-                emitStoreChange(new SongStoreSearchChangeEvent());
+        queryResult.clear();
+        for(Song song : songs) {
+            if(song.getTitle().toLowerCase().matches(String.format(".*%s.*", query.toLowerCase()))) {
+                queryResult.add(song);
             }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                System.err.println(firebaseError.getMessage());
-            }
-        });
+        }
+        emitStoreChange(new SongStoreSearchChangeEvent());
     }
 
     public class SongStoreChangeEvent implements StoreChangeEvent {
