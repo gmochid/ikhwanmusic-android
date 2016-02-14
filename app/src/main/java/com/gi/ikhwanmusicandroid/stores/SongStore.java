@@ -76,11 +76,8 @@ public class SongStore extends Store {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 queryResult.clear();
-                System.out.println(query);
                 for (DataSnapshot songSnapshot : dataSnapshot.getChildren()) {
                     Song song = songSnapshot.getValue(Song.class);
-                    queryResult.add(song);
-                    System.out.println(song.getTitle());
                 }
                 emitStoreChange(new SongStoreSearchChangeEvent());
             }

@@ -1,7 +1,5 @@
 package layout;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,7 +12,6 @@ import android.widget.TextView;
 import com.gi.ikhwanmusicandroid.R;
 import com.gi.ikhwanmusicandroid.actions.Dispatcher;
 import com.gi.ikhwanmusicandroid.actions.PlayerAction;
-import com.gi.ikhwanmusicandroid.models.Song;
 import com.gi.ikhwanmusicandroid.stores.PlayerStore;
 import com.squareup.otto.Subscribe;
 
@@ -24,13 +21,8 @@ import com.squareup.otto.Subscribe;
  * create an instance of this fragment.
  */
 public class PlayFragment extends Fragment {
-
-    private static final String SONG_PARAM = "song";
-    private static final String PLAY_PARAM = "play";
-
     private ImageView playButton;
     private ImageView pauseButton;
-    private ProgressBar loadingBar;
     private TextView titleText;
 
     private PlayerStore playerStore;
@@ -64,12 +56,10 @@ public class PlayFragment extends Fragment {
         playButton = (ImageView) view.findViewById(R.id.play_button);
         pauseButton = (ImageView) view.findViewById(R.id.pause_button);
         titleText = (TextView) view.findViewById(R.id.play_title);
-        loadingBar = (ProgressBar) view.findViewById(R.id.loading_bar);
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingBar.setVisibility(View.VISIBLE);
                 playButton.setVisibility(View.INVISIBLE);
                 playerAction.playCurrentSong();
             }
@@ -103,6 +93,5 @@ public class PlayFragment extends Fragment {
             playButton.setVisibility(View.VISIBLE);
             pauseButton.setVisibility(View.INVISIBLE);
         }
-        loadingBar.setVisibility(View.INVISIBLE);
     }
 }

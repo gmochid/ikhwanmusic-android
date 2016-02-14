@@ -42,14 +42,19 @@ public class AudioService {
 
         try {
             mediaPlayer.setDataSource(url);
-            mediaPlayer.prepare();
+            mediaPlayer.prepareAsync();
         } catch (IOException e) {
             e.printStackTrace();
             return;
         }
 
         System.out.println("play");
-        mediaPlayer.start();
+        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer player) {
+                player.start();
+            }
+        });
         playing = true;
     }
 

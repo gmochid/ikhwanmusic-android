@@ -1,5 +1,7 @@
 package com.gi.ikhwanmusicandroid.stores;
 
+import android.os.AsyncTask;
+
 import com.gi.ikhwanmusicandroid.actions.Action;
 import com.gi.ikhwanmusicandroid.actions.Dispatcher;
 import com.gi.ikhwanmusicandroid.actions.PlayerAction;
@@ -7,6 +9,7 @@ import com.gi.ikhwanmusicandroid.models.Song;
 import com.gi.ikhwanmusicandroid.services.AudioService;
 import com.squareup.otto.Subscribe;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -77,7 +80,6 @@ public class PlayerStore extends Store {
     }
 
     private void playRadio() {
-        System.out.println("Radio played");
         AudioService.getInstance().play(radioSong.getUrl());
         playing = true;
         playingMode = PlayingMode.RADIO;

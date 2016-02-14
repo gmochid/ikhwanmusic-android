@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
-import com.gi.ikhwanmusicandroid.MainActivity
 import com.gi.ikhwanmusicandroid.R
 import com.gi.ikhwanmusicandroid.actions.PlayerAction
 import com.gi.ikhwanmusicandroid.stores.SongStore
@@ -30,6 +30,7 @@ class SongAdapter(private var songStore: SongStore, private var playerAction: Pl
         holder.songImage.setImageDrawable(ContextCompat.getDrawable(holder.context, R.drawable.ic_menu_camera))
 
         holder.view.setOnClickListener ({
+            holder.playProgressBar.visibility = View.VISIBLE
             playerAction.playSong(song)
         })
     }
@@ -42,11 +43,13 @@ class SongAdapter(private var songStore: SongStore, private var playerAction: Pl
         var songTitle: TextView
         var songArtist: TextView
         var songImage: ImageView
+        var playProgressBar: ProgressBar
 
         init {
             songTitle = view.findViewById(R.id.home_card_title) as TextView
             songImage = view.findViewById(R.id.home_card_image) as ImageView
             songArtist = view.findViewById(R.id.home_card_subtitle) as TextView
+            playProgressBar = view.findViewById(R.id.play_progress_bar) as ProgressBar
         }
     }
 }
