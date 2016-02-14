@@ -28,6 +28,7 @@ class SongAdapter(private var songStore: SongStore, private var playerAction: Pl
         holder.songTitle.text = song.title
         holder.songArtist.text = song.artist
         holder.songImage.setImageDrawable(ContextCompat.getDrawable(holder.context, R.drawable.ic_menu_camera))
+        holder.playProgressBar.visibility = View.GONE
 
         holder.view.setOnClickListener ({
             holder.playProgressBar.visibility = View.VISIBLE

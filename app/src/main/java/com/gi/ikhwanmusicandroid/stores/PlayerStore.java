@@ -10,8 +10,7 @@ import com.squareup.otto.Subscribe;
 /**
  * Created by gmochid on 2/4/16.
  */
-public class PlayerStore extends Store {
-
+public class PlayerStore extends Store implements AudioService.AudioServiceListener {
     public enum PlayingMode {
         SONG,
         RADIO
@@ -59,31 +58,33 @@ public class PlayerStore extends Store {
     }
 
     private void playSong(Song song) {
-        AudioService.getInstance().play(song.getUrl());
+        AudioService.getInstance().play(song.getUrl(), this);
         currentSong = song;
         playing = true;
         playingMode = PlayingMode.SONG;
-        emitStoreChange(new PlayerStoreChangeEvent());
     }
 
     private void playCurrentSong() {
-        AudioService.getInstance().play(currentSong.getUrl());
+        AudioService.getInstance().play(currentSong.getUrl(), this);
         playing = true;
         playingMode = PlayingMode.SONG;
-        emitStoreChange(new PlayerStoreChangeEvent());
     }
 
     private void playRadio() {
-        AudioService.getInstance().play(radioSong.getUrl());
+        AudioService.getInstance().play(radioSong.getUrl(), this);
         playing = true;
         playingMode = PlayingMode.RADIO;
-        emitStoreChange(new PlayerStoreChangeEvent());
     }
 
     private void pause() {
         AudioService.getInstance().pause();
         playing = false;
         playingMode = PlayingMode.RADIO;
+        emitStoreChange(new PlayerStoreChangeEvent());
+    }
+
+    @Override
+    public void onAudioStarted() {
         emitStoreChange(new PlayerStoreChangeEvent());
     }
 

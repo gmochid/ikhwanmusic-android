@@ -28,7 +28,7 @@ public class AudioService {
         return audioService;
     }
 
-    public void play(String url) {
+    public void play(String url, final AudioServiceListener listener) {
         if (this.url.equals(url)) {
             if (!mediaPlayer.isPlaying()) {
                 mediaPlayer.start();
@@ -48,11 +48,11 @@ public class AudioService {
             return;
         }
 
-        System.out.println("play");
         mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer player) {
                 player.start();
+                listener.onAudioStarted();
             }
         });
         playing = true;
@@ -61,6 +61,10 @@ public class AudioService {
     public void pause() {
         mediaPlayer.pause();
         playing = false;
+    }
+
+    public interface AudioServiceListener {
+        void onAudioStarted();
     }
 
 }

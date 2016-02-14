@@ -12,6 +12,7 @@ import com.gi.ikhwanmusicandroid.R;
 import com.gi.ikhwanmusicandroid.actions.Dispatcher;
 import com.gi.ikhwanmusicandroid.actions.PlayerAction;
 import com.gi.ikhwanmusicandroid.adapters.SongAdapter;
+import com.gi.ikhwanmusicandroid.stores.PlayerStore;
 import com.gi.ikhwanmusicandroid.stores.SongStore;
 import com.squareup.otto.Subscribe;
 
@@ -77,4 +78,8 @@ public class HomeFragment extends Fragment {
         songAdapter.notifyDataSetChanged();
     }
 
+    @Subscribe
+    public void onPlayerStoreUpdated(PlayerStore.PlayerStoreChangeEvent event) {
+        songAdapter.notifyDataSetChanged();
+    }
 }
