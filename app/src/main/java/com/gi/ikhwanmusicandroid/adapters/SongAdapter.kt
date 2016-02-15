@@ -11,12 +11,13 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import com.gi.ikhwanmusicandroid.R
 import com.gi.ikhwanmusicandroid.actions.PlayerAction
+import com.gi.ikhwanmusicandroid.stores.PlayerStore
 import com.gi.ikhwanmusicandroid.stores.SongStore
 
 /**
  * Created by gmochid on 1/31/16.
  */
-class SongAdapter(private var songStore: SongStore, private var playerAction: PlayerAction) : RecyclerView.Adapter<SongAdapter.SongViewHolder>() {
+class SongAdapter(private var songStore: SongStore, private var playerStore: PlayerStore, private var playerAction: PlayerAction) : RecyclerView.Adapter<SongAdapter.SongViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.song_card, parent, false)
@@ -29,6 +30,12 @@ class SongAdapter(private var songStore: SongStore, private var playerAction: Pl
         holder.songArtist.text = song.artist
         holder.songImage.setImageDrawable(ContextCompat.getDrawable(holder.context, R.drawable.ic_menu_camera))
         holder.playProgressBar.visibility = View.GONE
+
+        if (playerStore.currentSong.equals(song)) {
+            holder.playStatusImage.visibility = View.VISIBLE
+        } else {
+            holder.playStatusImage.visibility = View.GONE
+        }
 
         holder.view.setOnClickListener ({
             holder.playProgressBar.visibility = View.VISIBLE
@@ -45,12 +52,14 @@ class SongAdapter(private var songStore: SongStore, private var playerAction: Pl
         var songArtist: TextView
         var songImage: ImageView
         var playProgressBar: ProgressBar
+        var playStatusImage: ImageView
 
         init {
             songTitle = view.findViewById(R.id.home_card_title) as TextView
             songImage = view.findViewById(R.id.home_card_image) as ImageView
             songArtist = view.findViewById(R.id.home_card_subtitle) as TextView
             playProgressBar = view.findViewById(R.id.play_progress_bar) as ProgressBar
+            playStatusImage = view.findViewById(R.id.play_status_image) as ImageView
         }
     }
 }

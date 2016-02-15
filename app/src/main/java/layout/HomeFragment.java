@@ -26,6 +26,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView songView;
 
     private SongStore songStore;
+    private PlayerStore playerStore;
     private PlayerAction playerAction;
     private Dispatcher dispatcher;
     private SongAdapter songAdapter;
@@ -40,9 +41,10 @@ public class HomeFragment extends Fragment {
      *
      * @return A new instance of fragment HomeFragment.
      */
-    public static HomeFragment newInstance(SongStore songStore, PlayerAction playerAction, Dispatcher dispatcher) {
+    public static HomeFragment newInstance(SongStore songStore, PlayerStore playerStore, PlayerAction playerAction, Dispatcher dispatcher) {
         HomeFragment fragment = new HomeFragment();
         fragment.songStore = songStore;
+        fragment.playerStore = playerStore;
         fragment.dispatcher = dispatcher;
         fragment.playerAction = playerAction;
         return fragment;
@@ -61,7 +63,7 @@ public class HomeFragment extends Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         songView.setLayoutManager(llm);
 
-        songAdapter = new SongAdapter(songStore, playerAction);
+        songAdapter = new SongAdapter(songStore, playerStore, playerAction);
         songView.setAdapter(songAdapter);
 
         return view;
