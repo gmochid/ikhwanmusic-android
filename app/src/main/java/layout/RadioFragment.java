@@ -63,6 +63,7 @@ public class RadioFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 loadingBar.setVisibility(View.VISIBLE);
+                playButton.setVisibility(View.INVISIBLE);
                 playerAction.playRadio();
             }
         });
