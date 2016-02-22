@@ -32,15 +32,25 @@ class SongAdapter(private var songStore: SongStore, private var playerStore: Pla
         holder.playProgressBar.visibility = View.GONE
 
         if (playerStore.currentSong.equals(song)) {
-            holder.playStatusImage.visibility = View.VISIBLE
-        } else {
-            holder.playStatusImage.visibility = View.GONE
-        }
+            holder.playStatusImage.visibility =
+                    if (playerStore.isPlaying) View.VISIBLE else View.GONE
+            holder.pauseStatusImage.visibility =
+                    if (playerStore.isPlaying) View.GONE else View.VISIBLE
 
-        holder.view.setOnClickListener ({
-            holder.playProgressBar.visibility = View.VISIBLE
-            playerAction.playSong(song)
-        })
+            holder.view.setOnClickListener ({
+                if (playerStore.isPlaying)
+                    playerAction.pause()
+                else
+                    playerAction.playCurrentSong()
+            })
+        } else {
+            holder.pauseStatusImage.visibility = View.GONE
+            holder.playStatusImage.visibility = View.GONE
+            holder.view.setOnClickListener ({
+                holder.playProgressBar.visibility = View.VISIBLE
+                playerAction.playSong(song)
+            })
+        }
     }
 
     override fun getItemCount(): Int {
@@ -53,6 +63,7 @@ class SongAdapter(private var songStore: SongStore, private var playerStore: Pla
         var songImage: ImageView
         var playProgressBar: ProgressBar
         var playStatusImage: ImageView
+        var pauseStatusImage: ImageView
 
         init {
             songTitle = view.findViewById(R.id.home_card_title) as TextView
@@ -60,6 +71,7 @@ class SongAdapter(private var songStore: SongStore, private var playerStore: Pla
             songArtist = view.findViewById(R.id.home_card_subtitle) as TextView
             playProgressBar = view.findViewById(R.id.play_progress_bar) as ProgressBar
             playStatusImage = view.findViewById(R.id.play_status_image) as ImageView
+            pauseStatusImage = view.findViewById(R.id.pause_status_image) as ImageView
         }
     }
 }

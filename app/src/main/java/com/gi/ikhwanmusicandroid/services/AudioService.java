@@ -32,6 +32,7 @@ public class AudioService {
         if (this.url.equals(url)) {
             if (!mediaPlayer.isPlaying()) {
                 mediaPlayer.start();
+                listener.onAudioStarted();
             }
             return;
         }

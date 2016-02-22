@@ -38,6 +38,16 @@
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:id="@+id/pause_status_image"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:src="@android:drawable/ic_media_pause"
+                android:visibility="gone"
+                />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:id="@+id/play_status_image"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
