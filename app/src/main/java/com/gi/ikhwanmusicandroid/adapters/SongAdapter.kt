@@ -37,12 +37,14 @@ abstract class SongAdapter(private var songStore: SongStore, private var playerS
 
         if (playerStore.currentSong.equals(song)) {
             holder.playStatusImage.visibility =
-                    if (playerStore.isPlaying) View.VISIBLE else View.GONE
+                    if (playerStore.playingStatus == PlayerStore.PlayingStatus.PLAY)
+                        View.VISIBLE else View.GONE
             holder.pauseStatusImage.visibility =
-                    if (playerStore.isPlaying) View.GONE else View.VISIBLE
+                    if (playerStore.playingStatus == PlayerStore.PlayingStatus.PAUSE)
+                        View.VISIBLE else View.GONE
 
             holder.view.setOnClickListener ({
-                if (playerStore.isPlaying)
+                if (playerStore.playingStatus == PlayerStore.PlayingStatus.PLAY)
                     playerAction.pause()
                 else
                     playerAction.playCurrentSong()

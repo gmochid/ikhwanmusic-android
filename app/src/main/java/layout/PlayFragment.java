@@ -87,8 +87,10 @@ public class PlayFragment extends Fragment {
         titleText.setText(playerStore.getCurrentSong().getTitle());
 
         if(playerStore.getPlayingMode() == PlayerStore.PlayingMode.SONG) {
-            playButton.setVisibility(!playerStore.isPlaying() ? View.VISIBLE : View.INVISIBLE);
-            pauseButton.setVisibility(playerStore.isPlaying() ? View.VISIBLE : View.INVISIBLE);
+            playButton.setVisibility(
+                    playerStore.getPlayingStatus() == PlayerStore.PlayingStatus.PAUSE ? View.VISIBLE : View.INVISIBLE);
+            pauseButton.setVisibility(
+                    playerStore.getPlayingStatus() == PlayerStore.PlayingStatus.PLAY ? View.VISIBLE : View.INVISIBLE);
         } else {
             playButton.setVisibility(View.VISIBLE);
             pauseButton.setVisibility(View.INVISIBLE);

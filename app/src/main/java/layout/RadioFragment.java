@@ -88,8 +88,10 @@ public class RadioFragment extends Fragment {
     @Subscribe
     public void onPlayerStoreChange(PlayerStore.PlayerStoreChangeEvent event) {
         if (playerStore.getPlayingMode() == PlayerStore.PlayingMode.RADIO) {
-            playButton.setVisibility(!playerStore.isPlaying() ? View.VISIBLE : View.INVISIBLE);
-            pauseButton.setVisibility(playerStore.isPlaying() ? View.VISIBLE : View.INVISIBLE);
+            playButton.setVisibility(
+                    playerStore.getPlayingStatus() == PlayerStore.PlayingStatus.PAUSE ? View.VISIBLE : View.INVISIBLE);
+            pauseButton.setVisibility(
+                    playerStore.getPlayingStatus() == PlayerStore.PlayingStatus.PLAY ? View.VISIBLE : View.INVISIBLE);
         } else {
             playButton.setVisibility(View.VISIBLE);
             pauseButton.setVisibility(View.INVISIBLE);

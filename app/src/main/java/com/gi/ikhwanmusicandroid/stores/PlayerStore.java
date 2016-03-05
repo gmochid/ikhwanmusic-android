@@ -20,16 +20,22 @@ public class PlayerStore extends Store implements AudioService.AudioServiceListe
         RADIO
     }
 
+    public enum PlayingStatus {
+        PLAY,
+        PAUSE,
+        NOT_STARTED
+    }
+
     private static PlayerStore instance;
     private final Song radioSong = new Song("Ikhwan Radio", "http://philae.shoutca.st:8343/stream", "");
     private Song currentSong;
     private ArrayList<Song> playlist;
-    private Boolean playing;
+    private PlayingStatus playingStatus;
     private PlayingMode playingMode;
 
     protected PlayerStore(Dispatcher dispatcher) {
         super(dispatcher);
-        playing = false;
+        playingStatus = PlayingStatus.NOT_STARTED;
         currentSong = new Song("Tes", "https://s3-ap-southeast-1.amazonaws.com/ikhwan-music/Mengenal+Nabi.mp3", "Qatrunnada");
     }
 
@@ -68,25 +74,25 @@ public class PlayerStore extends Store implements AudioService.AudioServiceListe
     private void playSong(Song song) {
         AudioService.getInstance().play(song.getUrl(), this);
         currentSong = song;
-        playing = true;
+        playingStatus = PlayingStatus.PLAY;
         playingMode = PlayingMode.SONG;
     }
 
     private void playCurrentSong() {
         AudioService.getInstance().play(currentSong.getUrl(), this);
-        playing = true;
+        playingStatus = PlayingStatus.PLAY;
         playingMode = PlayingMode.SONG;
     }
 
     private void playRadio() {
         AudioService.getInstance().play(radioSong.getUrl(), this);
-        playing = true;
+        playingStatus = PlayingStatus.PLAY;
         playingMode = PlayingMode.RADIO;
     }
 
     private void pause() {
         AudioService.getInstance().pause();
-        playing = false;
+        playingStatus = PlayingStatus.PAUSE;
         playingMode = PlayingMode.RADIO;
         emitStoreChange(new PlayerStoreChangeEvent());
     }
@@ -107,8 +113,8 @@ public class PlayerStore extends Store implements AudioService.AudioServiceListe
         return currentSong;
     }
 
-    public Boolean isPlaying() {
-        return playing;
+    public PlayingStatus getPlayingStatus() {
+        return playingStatus;
     }
 
     public PlayingMode getPlayingMode() {
