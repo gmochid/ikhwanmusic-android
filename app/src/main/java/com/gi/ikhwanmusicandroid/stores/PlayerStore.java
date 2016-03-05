@@ -7,6 +7,10 @@ import com.gi.ikhwanmusicandroid.models.Song;
 import com.gi.ikhwanmusicandroid.services.AudioService;
 import com.squareup.otto.Subscribe;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
+
 /**
  * Created by gmochid on 2/4/16.
  */
@@ -19,6 +23,7 @@ public class PlayerStore extends Store implements AudioService.AudioServiceListe
     private static PlayerStore instance;
     private final Song radioSong = new Song("Ikhwan Radio", "http://philae.shoutca.st:8343/stream", "");
     private Song currentSong;
+    private ArrayList<Song> playlist;
     private Boolean playing;
     private PlayingMode playingMode;
 
@@ -52,6 +57,9 @@ public class PlayerStore extends Store implements AudioService.AudioServiceListe
             case PlayerAction.PLAYER_PAUSE:
                 pause();
                 break;
+            case PlayerAction.PLAYER_RANDOM_PLAYLIST:
+                randomPlaylist();
+                break;
             default:
                 return;
         }
@@ -80,6 +88,13 @@ public class PlayerStore extends Store implements AudioService.AudioServiceListe
         AudioService.getInstance().pause();
         playing = false;
         playingMode = PlayingMode.RADIO;
+        emitStoreChange(new PlayerStoreChangeEvent());
+    }
+
+    private void randomPlaylist() {
+        playlist = new ArrayList<>(SongStore.getInstance(dispatcher).getSongs());
+        Collections.shuffle(playlist, new Random(System.nanoTime()));
+        currentSong = playlist.get(0);
         emitStoreChange(new PlayerStoreChangeEvent());
     }
 

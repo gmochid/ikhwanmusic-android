@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.gi.ikhwanmusicandroid.R;
 import com.gi.ikhwanmusicandroid.actions.Dispatcher;
 import com.gi.ikhwanmusicandroid.actions.PlayerAction;
+import com.gi.ikhwanmusicandroid.adapters.HomeSongAdapter;
 import com.gi.ikhwanmusicandroid.adapters.SongAdapter;
 import com.gi.ikhwanmusicandroid.stores.PlayerStore;
 import com.gi.ikhwanmusicandroid.stores.SongStore;
@@ -63,7 +64,7 @@ public class HomeFragment extends Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         songView.setLayoutManager(llm);
 
-        songAdapter = new SongAdapter(songStore, playerStore, playerAction);
+        songAdapter = new HomeSongAdapter(songStore, playerStore, playerAction);
         songView.setAdapter(songAdapter);
 
         return view;

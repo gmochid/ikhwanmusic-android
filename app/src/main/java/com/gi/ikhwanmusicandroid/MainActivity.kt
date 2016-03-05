@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun fragmentSetup() {
         dispatcher = Dispatcher.get(Bus())
         val playerStore = PlayerStore.getInstance(dispatcher)
-        val songStore = SongStore.getInstance(dispatcher, Firebase(BuildConfig.FIREBASE_URL))
+        val songStore = SongStore.getInstance(dispatcher)
 
         dispatcher.register(this)
         dispatcher.register(playerStore)
@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         playFragment = PlayFragment.newInstance(playerStore, playerAction, dispatcher)
         radioFragment = RadioFragment.newInstance(playerStore, playerAction, dispatcher)
         settingsFragment = SettingsFragment.newInstance()
-        searchResultFragment = SearchResultFragment.newInstance(songStore, playerAction, dispatcher)
+        searchResultFragment = SearchResultFragment.newInstance(songStore, playerStore, playerAction, dispatcher)
     }
 
     fun moveToPage(itemId: Int) {

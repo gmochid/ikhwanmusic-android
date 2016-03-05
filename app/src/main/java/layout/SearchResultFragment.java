@@ -1,7 +1,5 @@
 package layout;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,8 +11,8 @@ import android.view.ViewGroup;
 import com.gi.ikhwanmusicandroid.R;
 import com.gi.ikhwanmusicandroid.actions.Dispatcher;
 import com.gi.ikhwanmusicandroid.actions.PlayerAction;
-import com.gi.ikhwanmusicandroid.adapters.SearchResultAdapter;
-import com.gi.ikhwanmusicandroid.adapters.SongAdapter;
+import com.gi.ikhwanmusicandroid.adapters.SearchResultSongAdapter;
+import com.gi.ikhwanmusicandroid.stores.PlayerStore;
 import com.gi.ikhwanmusicandroid.stores.SongStore;
 import com.squareup.otto.Subscribe;
 
@@ -26,11 +24,12 @@ import com.squareup.otto.Subscribe;
 public class SearchResultFragment extends Fragment {
 
     private SongStore songStore;
+    private PlayerStore playerStore;
     private PlayerAction playerAction;
     private Dispatcher dispatcher;
 
     private RecyclerView searchResultView;
-    private SearchResultAdapter searchResultAdapter;
+    private SearchResultSongAdapter searchResultSongAdapter;
 
     public SearchResultFragment() {
     }
@@ -42,9 +41,10 @@ public class SearchResultFragment extends Fragment {
      * @return A new instance of fragment SearchResultFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SearchResultFragment newInstance(SongStore songStore, PlayerAction playerAction, Dispatcher dispatcher) {
+    public static SearchResultFragment newInstance(SongStore songStore, PlayerStore playerStore, PlayerAction playerAction, Dispatcher dispatcher) {
         SearchResultFragment fragment = new SearchResultFragment();
         fragment.songStore = songStore;
+        fragment.playerStore = playerStore;
         fragment.playerAction = playerAction;
         fragment.dispatcher = dispatcher;
         return fragment;
@@ -63,8 +63,8 @@ public class SearchResultFragment extends Fragment {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         searchResultView.setLayoutManager(llm);
 
-        searchResultAdapter = new SearchResultAdapter(songStore, playerAction);
-        searchResultView.setAdapter(searchResultAdapter);
+        searchResultSongAdapter = new SearchResultSongAdapter(songStore, playerStore, playerAction);
+        searchResultView.setAdapter(searchResultSongAdapter);
 
         return view;
     }
@@ -77,7 +77,7 @@ public class SearchResultFragment extends Fragment {
 
     @Subscribe
     public void onSongStoreSearchUpdated(SongStore.SongStoreSearchChangeEvent event) {
-        searchResultAdapter.notifyDataSetChanged();
+        searchResultSongAdapter.notifyDataSetChanged();
 
         if (songStore.getQueryResult().isEmpty()) {
             searchResultView.setVisibility(View.GONE);

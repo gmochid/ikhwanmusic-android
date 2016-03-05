@@ -2,6 +2,8 @@ package com.gi.ikhwanmusicandroid.actions;
 
 import com.gi.ikhwanmusicandroid.models.Song;
 
+import java.util.ArrayList;
+
 /**
  * Created by gmochid on 2/4/16.
  */
@@ -10,6 +12,7 @@ public class PlayerAction {
     public static final String PLAYER_PLAY_CURRENT_SONG = "play_current_song";
     public static final String PLAYER_PLAY_RADIO = "play_radio";
     public static final String PLAYER_PAUSE = "pause";
+    public static final String PLAYER_RANDOM_PLAYLIST = "random_playlist";
 
     public static final String KEY_SONG = "key_song";
 
@@ -42,5 +45,9 @@ public class PlayerAction {
 
     public void pause() {
         dispatcher.dispatch(PLAYER_PAUSE);
+    }
+
+    public void generateRandomPlaylist() {
+        dispatcher.dispatch(PLAYER_RANDOM_PLAYLIST);
     }
 }

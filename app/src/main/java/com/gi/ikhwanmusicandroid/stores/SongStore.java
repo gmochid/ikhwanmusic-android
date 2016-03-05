@@ -4,6 +4,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.gi.ikhwanmusicandroid.BuildConfig;
 import com.gi.ikhwanmusicandroid.actions.Action;
 import com.gi.ikhwanmusicandroid.actions.Dispatcher;
 import com.gi.ikhwanmusicandroid.actions.PlayerAction;
@@ -22,11 +23,11 @@ public class SongStore extends Store {
     private ArrayList<Song> queryResult;
     private Firebase ref;
 
-    protected SongStore(Dispatcher dispatcher, Firebase rootFirebase) {
+    protected SongStore(final Dispatcher dispatcher) {
         super(dispatcher);
         songs = new ArrayList<>();
         queryResult = new ArrayList<>();
-        ref = rootFirebase.child("songs");
+        ref = new Firebase(BuildConfig.FIREBASE_URL).child("songs");
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -35,6 +36,7 @@ public class SongStore extends Store {
                     Song song = songSnapshot.getValue(Song.class);
                     songs.add(song);
                 }
+                PlayerAction.getInstance(dispatcher).generateRandomPlaylist();
                 emitStoreChange(new SongStoreChangeEvent());
             }
 
@@ -45,9 +47,9 @@ public class SongStore extends Store {
         });
     }
 
-    public static SongStore getInstance(Dispatcher dispatcher, Firebase rootFirebase) {
+    public static SongStore getInstance(Dispatcher dispatcher) {
         if (instance == null) {
-            instance = new SongStore(dispatcher, rootFirebase);
+            instance = new SongStore(dispatcher);
         }
         return instance;
     }

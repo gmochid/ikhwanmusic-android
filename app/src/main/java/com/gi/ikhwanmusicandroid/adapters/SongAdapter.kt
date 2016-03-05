@@ -11,13 +11,17 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import com.gi.ikhwanmusicandroid.R
 import com.gi.ikhwanmusicandroid.actions.PlayerAction
+import com.gi.ikhwanmusicandroid.models.Song
 import com.gi.ikhwanmusicandroid.stores.PlayerStore
 import com.gi.ikhwanmusicandroid.stores.SongStore
+import java.lang.reflect.Method
 
 /**
  * Created by gmochid on 1/31/16.
  */
-class SongAdapter(private var songStore: SongStore, private var playerStore: PlayerStore, private var playerAction: PlayerAction) : RecyclerView.Adapter<SongAdapter.SongViewHolder>() {
+abstract class SongAdapter(private var songStore: SongStore, private var playerStore: PlayerStore, private var playerAction: PlayerAction) : RecyclerView.Adapter<SongAdapter.SongViewHolder>() {
+
+    abstract fun getSong(position: Int) : Song
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.song_card, parent, false)
@@ -25,7 +29,7 @@ class SongAdapter(private var songStore: SongStore, private var playerStore: Pla
     }
 
     override fun onBindViewHolder(holder: SongViewHolder, position: Int) {
-        val song = songStore.songs[position]
+        val song = getSong(position)
         holder.songTitle.text = song.title
         holder.songArtist.text = song.artist
         holder.songImage.setImageDrawable(ContextCompat.getDrawable(holder.context, R.drawable.ic_menu_camera))
@@ -51,10 +55,6 @@ class SongAdapter(private var songStore: SongStore, private var playerStore: Pla
                 playerAction.playSong(song)
             })
         }
-    }
-
-    override fun getItemCount(): Int {
-        return songStore.songs.size
     }
 
     class SongViewHolder(var view: View, var context: Context) : RecyclerView.ViewHolder(view) {
