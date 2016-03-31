@@ -12,6 +12,8 @@ public class PlayerAction {
     public static final String PLAYER_PLAY_CURRENT_SONG = "play_current_song";
     public static final String PLAYER_PLAY_RADIO = "play_radio";
     public static final String PLAYER_PAUSE = "pause";
+    public static final String PLAYER_NEXT = "next";
+    public static final String PLAYER_PREVIOUS = "previous";
     public static final String PLAYER_RANDOM_PLAYLIST = "random_playlist";
 
     public static final String KEY_SONG = "key_song";
@@ -49,5 +51,13 @@ public class PlayerAction {
 
     public void generateRandomPlaylist() {
         dispatcher.dispatch(PLAYER_RANDOM_PLAYLIST);
+    }
+
+    public void next() {
+        dispatcher.dispatch(PLAYER_NEXT);
+    }
+
+    public void previous() {
+        dispatcher.dispatch(PLAYER_PREVIOUS);
     }
 }

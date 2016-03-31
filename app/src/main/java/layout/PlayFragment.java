@@ -23,6 +23,8 @@ import com.squareup.otto.Subscribe;
 public class PlayFragment extends Fragment {
     private ImageView playButton;
     private ImageView pauseButton;
+    private ImageView nextButton;
+    private ImageView previousButton;
     private TextView titleText;
 
     private PlayerStore playerStore;
@@ -55,6 +57,8 @@ public class PlayFragment extends Fragment {
 
         playButton = (ImageView) view.findViewById(R.id.play_button);
         pauseButton = (ImageView) view.findViewById(R.id.pause_button);
+        nextButton = (ImageView) view.findViewById(R.id.next_button);
+        previousButton = (ImageView) view.findViewById(R.id.previous_button);
         titleText = (TextView) view.findViewById(R.id.play_title);
 
         playButton.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +72,13 @@ public class PlayFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 playerAction.pause();
+            }
+        });
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                playerAction.next();
             }
         });
 

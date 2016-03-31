@@ -66,6 +66,12 @@ public class PlayerStore extends Store implements AudioService.AudioServiceListe
             case PlayerAction.PLAYER_RANDOM_PLAYLIST:
                 randomPlaylist();
                 break;
+            case PlayerAction.PLAYER_NEXT:
+                next();
+                break;
+            case PlayerAction.PLAYER_PREVIOUS:
+                previous();
+                break;
             default:
                 return;
         }
@@ -102,6 +108,23 @@ public class PlayerStore extends Store implements AudioService.AudioServiceListe
         Collections.shuffle(playlist, new Random(System.nanoTime()));
         currentSong = playlist.get(0);
         emitStoreChange(new PlayerStoreChangeEvent());
+    }
+
+    private void next() {
+        playlist.add(playlist.get(0));
+        playlist.remove(0);
+
+        currentSong = playlist.get(0);
+        playCurrentSong();
+    }
+
+    private void previous() {
+        Song song = playlist.get(0);
+        playlist.remove(playlist.size() - 1);
+        playlist.add(0, song);
+
+        currentSong = playlist.get(0);
+        playCurrentSong();
     }
 
     @Override

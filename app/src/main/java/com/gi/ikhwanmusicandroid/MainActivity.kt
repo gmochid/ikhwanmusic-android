@@ -16,6 +16,7 @@ import com.firebase.client.Firebase
 import com.gi.ikhwanmusicandroid.actions.Dispatcher
 import com.gi.ikhwanmusicandroid.actions.PlayerAction
 import com.gi.ikhwanmusicandroid.actions.SongAction
+import com.gi.ikhwanmusicandroid.services.AudioService
 import com.gi.ikhwanmusicandroid.stores.PlayerStore
 import com.gi.ikhwanmusicandroid.stores.SongStore
 import com.squareup.otto.Bus
@@ -126,6 +127,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         radioFragment = RadioFragment.newInstance(playerStore, playerAction, dispatcher)
         settingsFragment = SettingsFragment.newInstance()
         searchResultFragment = SearchResultFragment.newInstance(songStore, playerStore, playerAction, dispatcher)
+
+        AudioService.getInstance(playerAction)
     }
 
     fun moveToPage(itemId: Int) {

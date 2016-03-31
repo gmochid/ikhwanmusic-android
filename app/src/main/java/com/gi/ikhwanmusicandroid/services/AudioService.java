@@ -2,6 +2,7 @@ package com.gi.ikhwanmusicandroid.services;
 
 import android.media.MediaPlayer;
 
+import com.gi.ikhwanmusicandroid.actions.PlayerAction;
 import com.gi.ikhwanmusicandroid.models.Song;
 
 import java.io.IOException;
@@ -13,17 +14,25 @@ public class AudioService {
 
     private static AudioService audioService;
 
+    private PlayerAction playerAction;
     private MediaPlayer mediaPlayer;
     private String url = "";
-    private Boolean playing = false;
 
     private AudioService() {
         mediaPlayer = new MediaPlayer();
     }
 
-    public static AudioService getInstance() {
+    public static AudioService getInstance(PlayerAction playerAction) {
         if (audioService == null) {
             audioService = new AudioService();
+            audioService.playerAction = playerAction;
+        }
+        return audioService;
+    }
+
+    public static AudioService getInstance() {
+        if (audioService == null) {
+            return null;
         }
         return audioService;
     }
@@ -56,12 +65,16 @@ public class AudioService {
                 listener.onAudioStarted();
             }
         });
-        playing = true;
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                playerAction.next();
+            }
+        });
     }
 
     public void pause() {
         mediaPlayer.pause();
-        playing = false;
     }
 
     public interface AudioServiceListener {
