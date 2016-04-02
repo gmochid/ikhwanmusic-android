@@ -111,7 +111,8 @@ public class PlayerStore extends Store implements AudioService.AudioServiceListe
     }
 
     private void next() {
-        playlist.add(playlist.get(0));
+        Song song = playlist.get(0);
+        playlist.add(song);
         playlist.remove(0);
 
         currentSong = playlist.get(0);
@@ -119,9 +120,9 @@ public class PlayerStore extends Store implements AudioService.AudioServiceListe
     }
 
     private void previous() {
-        Song song = playlist.get(0);
-        playlist.remove(playlist.size() - 1);
+        Song song = playlist.get(playlist.size() - 1);
         playlist.add(0, song);
+        playlist.remove(playlist.size() - 1);
 
         currentSong = playlist.get(0);
         playCurrentSong();

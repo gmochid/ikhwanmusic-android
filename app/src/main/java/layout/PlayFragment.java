@@ -81,6 +81,12 @@ public class PlayFragment extends Fragment {
                 playerAction.next();
             }
         });
+        previousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                playerAction.previous();
+            }
+        });
 
         onPlayerStoreChange(null);
 

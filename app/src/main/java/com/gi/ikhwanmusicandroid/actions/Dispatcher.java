@@ -41,6 +41,7 @@ public class Dispatcher {
         if (data.length % 2 != 0) {
             throw new IllegalArgumentException("Data must be a valid list of key,value pairs");
         }
+        System.out.println(type);
 
         Action.Builder actionBuilder = Action.type(type);
         int i = 0;
