@@ -40,7 +40,7 @@
         android:src="@drawable/ic_pause_circle_outline_24dp" />
 
     <ProgressBar
-        android:id="@+id/loading_bar"
+        android:id="@+id/play_progress_bar"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_centerVertical="true"

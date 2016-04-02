@@ -24,10 +24,10 @@ import com.squareup.otto.Subscribe;
 public class RadioFragment extends Fragment {
     private ImageView playButton;
     private ImageView pauseButton;
+    private ProgressBar playProgressBar;
 
     private PlayerStore playerStore;
     private PlayerAction playerAction;
-    private ProgressBar loadingBar;
     private Dispatcher dispatcher;
 
     public RadioFragment() {
@@ -57,12 +57,12 @@ public class RadioFragment extends Fragment {
 
         playButton = (ImageView) view.findViewById(R.id.play_button);
         pauseButton = (ImageView) view.findViewById(R.id.pause_button);
-        loadingBar = (ProgressBar) view.findViewById(R.id.loading_bar);
+        playProgressBar = (ProgressBar) view.findViewById(R.id.play_progress_bar);
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadingBar.setVisibility(View.VISIBLE);
+                playProgressBar.setVisibility(View.VISIBLE);
                 playButton.setVisibility(View.INVISIBLE);
                 playerAction.playRadio();
             }
@@ -96,6 +96,6 @@ public class RadioFragment extends Fragment {
             playButton.setVisibility(View.VISIBLE);
             pauseButton.setVisibility(View.INVISIBLE);
         }
-        loadingBar.setVisibility(View.INVISIBLE);
+        playProgressBar.setVisibility(View.GONE);
     }
 }

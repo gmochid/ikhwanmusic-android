@@ -37,6 +37,17 @@
         android:scaleType="fitCenter"
         android:src="@drawable/ic_pause_circle_outline_24dp" />
 
+    <ProgressBar
+        android:id="@+id/play_progress_bar"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"
+        android:visibility="gone"
+        android:indeterminateDrawable="@drawable/progress"
+        />
+
     <ImageView
         android:layout_width="70dp"
         android:layout_height="70dp"
@@ -54,5 +65,6 @@
         android:layout_alignTop="@+id/play_button"
         android:layout_toLeftOf="@+id/play_button"
         android:layout_toStartOf="@+id/play_button" />
+
 
 </RelativeLayout>

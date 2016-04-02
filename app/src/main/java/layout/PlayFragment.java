@@ -26,6 +26,7 @@ public class PlayFragment extends Fragment {
     private ImageView nextButton;
     private ImageView previousButton;
     private TextView titleText;
+    private ProgressBar playProgressBar;
 
     private PlayerStore playerStore;
     private PlayerAction playerAction;
@@ -60,11 +61,13 @@ public class PlayFragment extends Fragment {
         nextButton = (ImageView) view.findViewById(R.id.next_button);
         previousButton = (ImageView) view.findViewById(R.id.previous_button);
         titleText = (TextView) view.findViewById(R.id.play_title);
+        playProgressBar = (ProgressBar) view.findViewById(R.id.play_progress_bar);
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 playButton.setVisibility(View.INVISIBLE);
+                playProgressBar.setVisibility(View.VISIBLE);
                 playerAction.playCurrentSong();
             }
         });
@@ -102,6 +105,7 @@ public class PlayFragment extends Fragment {
     @Subscribe
     public void onPlayerStoreChange(PlayerStore.PlayerStoreChangeEvent event) {
         titleText.setText(playerStore.getCurrentSong().getTitle());
+        playProgressBar.setVisibility(View.GONE);
 
         if(playerStore.getPlayingMode() == PlayerStore.PlayingMode.SONG) {
             playButton.setVisibility(
