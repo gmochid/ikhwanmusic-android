@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center"
         android:id="@+id/play_title"
         android:layout_gravity="center_horizontal|top"
         android:layout_marginTop="169dp"
@@ -20,6 +21,7 @@
     <ImageView
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:layout_below="@id/play_title"
         android:id="@+id/play_button"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
@@ -30,6 +32,7 @@
     <ImageView
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:layout_below="@id/play_title"
         android:id="@+id/pause_button"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
@@ -43,6 +46,7 @@
         android:layout_height="70dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
+        android:layout_below="@id/play_title"
         android:adjustViewBounds="true"
         android:visibility="gone"
         android:indeterminateDrawable="@drawable/progress"
@@ -51,6 +55,7 @@
     <ImageView
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:layout_below="@id/play_title"
         android:id="@+id/next_button"
         android:src="@drawable/ic_skip_next_24dp"
         android:layout_alignTop="@+id/play_button"
@@ -60,6 +65,7 @@
     <ImageView
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:layout_below="@id/play_title"
         android:id="@+id/previous_button"
         android:src="@drawable/ic_skip_previous_24dp"
         android:layout_alignTop="@+id/play_button"
