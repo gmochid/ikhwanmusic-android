@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gi.ikhwanmusicandroid">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.gi.ikhwanmusicandroid" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="com.gi.ikhwanmusicandroid"/>
+                <action android:name="com.gi.ikhwanmusicandroid" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="04c0b22292cf773513257cffee937b4b3ee62a04" />
@@ -27,7 +29,5 @@
             android:name="android.app.searchable"
             android:resource="@xml/searchable" />
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
